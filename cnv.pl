@@ -7,7 +7,7 @@ my %cnvs;
 my %ids;
 
 my $filename="zebrafishallcallsTissuespecificcomparisonnexus6.0.txt";
-open(FILE,$filename) || "can't open that $filename";
+open(FILE,$filename) || die "can't open that $filename";
 while (<FILE>)
 {
 	my @temp=split("\t", $_);
