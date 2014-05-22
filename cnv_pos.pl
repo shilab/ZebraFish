@@ -3,18 +3,10 @@
 use strict;
 use warnings;
 
-my $filename = "CNV_ZFn.txt";
-open(FILE, $filename) || die "Can't open file $filename";
-my @line = <FILE>;
-
-my @lines;
-foreach(@line)
-{
-	@lines = split("\"",$_);
-}
-
 my $output = "snpid\tchr\tpos\n";
-foreach (@lines)
+my $filename = "CNV_matrix";
+open(FILE, $filename) || die "Can't open file $filename";
+while(<FILE>)
 {
 	if ($_=~/^cnv/)
 	{
@@ -24,7 +16,8 @@ foreach (@lines)
 	{
 		if ($_=~/^chr/)
 		{
-			my $id = $_;
+		    my @temp = split "\t", $_;
+			my $id = $temp[0];
 			$output.="$id\t";
 			$id = substr($id,3);
 			my @id = split(":",$id);
