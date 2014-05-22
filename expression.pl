@@ -16,7 +16,7 @@ while (<FILE>)
     chomp;
     if ($_ =~ /^Probe/)
     {
-	my @header = split "\t", $_;
+	my @header = split("\t", $_);
 	foreach (@header)
 	{
 	    my @temp = split(/ /, $_);
@@ -31,14 +31,12 @@ while (<FILE>)
 	    }
 	    $i++;
 	}
-#	print "$_\n";
     }
     else
     {
-	my @line = split "\t", $_;
+	my @line = split("\t", $_);
 	$kid_output .= join ("\t", @line[@kidney]) ."\n";
 	$liver_output .= join ("\t", @line[@liver])."\n";
-#	print "$_\n";
     }
 }
 close FILE;
