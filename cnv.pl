@@ -10,6 +10,10 @@ my $filename="zebrafishallcallsTissuespecificcomparisonnexus6.0.txt";
 open(FILE,$filename) || die "can't open that $filename";
 while (<FILE>)
 {
+	if($_=~/^Sample/)
+	{
+		next;
+	}
 	my @temp=split("\t", $_);
 	my $rawid=$temp[0];
 	my $region=$temp[1];
