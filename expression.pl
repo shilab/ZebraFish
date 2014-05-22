@@ -13,6 +13,7 @@ my $filename="gene_all_filesRMA-GENE-FULL-Group1.txt";
 open(FILE,$filename) || die "can't open that $filename";
 while (<FILE>)
 {
+    $_ =~ s/\r?\n$//;
     chomp;
     if ($_ =~ /^Probe/)
     {
