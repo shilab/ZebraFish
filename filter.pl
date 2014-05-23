@@ -12,10 +12,10 @@ while (<FILE>)
 {
 	chomp;
 	my %genocount;
-	if ($_=~/^cnvid/)
+	if ($_=~/^id/)
 	{
 		$output.="$_\n";
-		print "$_\n";
+		#print "$_\n";
 	}
 	else
 	{
