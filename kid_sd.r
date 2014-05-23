@@ -1,5 +1,5 @@
 #Will Need to change location of file
-kidney_expression <- read.delim("~/Development/repos/ZebraFish/kidney_expression")
+kidney_expression <- read.delim("~/Development/repos/ZebraFish/kidney_expression.out")
 
 geneid<-kidney_expression[,1]
 

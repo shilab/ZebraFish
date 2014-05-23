@@ -1,5 +1,5 @@
 #Will Need to change location of file
-liver_expression <- read.delim("~/Development/repos/ZebraFish/liver_expression")
+liver_expression <- read.delim("~/Development/repos/ZebraFish/liver_expression.out")
 
 geneid<-liver_expression[,1]
 
