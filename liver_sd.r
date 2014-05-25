@@ -18,7 +18,6 @@ mean <- mean(liver_sd,na.rm=T)
 length<-length(liver_sd)
 
 zscores <- vector(length=length(liver_sd))
-#create loop for liver_Means 
 
 for(i in 1:length)
 {
@@ -26,7 +25,6 @@ for(i in 1:length)
   zscores[i] <- z
 }
 
-#geneid<-geneid[which(zscores>3)]
 pvals<-pnorm(zscores,lower.tail=F)
 liver_expression.filt<-liver_expression[which(pvals<.01),]
 write.table(liver_expression.filt,file="~/Development/repos/Zebrafish/liver_expression.out.filter",sep="\t",row.names=FALSE,col.names=TRUE,quote=FALSE)
