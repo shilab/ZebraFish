@@ -18,7 +18,6 @@ mean <- mean(kid_sd,na.rm=T)
 length<-length(kid_sd)
 
 zscores <- vector(length=length(kid_sd))
-#create loop for kid_Means 
 
 for(i in 1:length)
 {
@@ -26,7 +25,6 @@ for(i in 1:length)
   zscores[i] <- z
 }
 
-#geneid<-geneid[which(zscores>3)]
 pvals<-pnorm(zscores,lower.tail=F)
 kid_expression.filt<-kidney_expression[which(pvals<.01),]
 write.table(kid_expression.filt,file="~/Development/repos/Zebrafish/kidney_expression.out.filter",sep="\t",row.names=FALSE,col.names=TRUE,quote=FALSE)
