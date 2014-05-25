@@ -73,14 +73,6 @@ while(<FILE>)
 	}
 }
 
-$i=0;
-foreach(@liver_index)
-{
-	#print "$liver_index[$i]\t$kid_index[$i]\t$cnv_index[$i]\n";
-	$i++;
-}
-
-
 open(FILE,$kid_file) || die "Can't open file $kid_file.\n";
 while(<FILE>)
 {
