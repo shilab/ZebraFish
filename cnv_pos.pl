@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-
 use strict;
 use warnings;
 
@@ -32,7 +31,6 @@ while(<FILE>)
 			$end = join("",@end);
 			my $mid = ($start+$end)/2;
 			$output.="$mid\n";
-			#print "$id\n";
 		}
 	}
 }
