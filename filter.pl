@@ -15,7 +15,6 @@ while (<FILE>)
 	if ($_=~/^id/)
 	{
 		$output.="$_\n";
-		#print "$_\n";
 	}
 	else
 	{
@@ -30,7 +29,6 @@ while (<FILE>)
 		my @keys = keys %genocount;
 		foreach (@keys)
 		{
-			#print $_ . "\t" . $genocount{$_} . "\n";
 
 				if($genocount{$_} < $low)
 				{
@@ -41,10 +39,8 @@ while (<FILE>)
 		if ($low < $total)
 		{
 			my $perc = $low/$total;
-			#print "$perc\n";
 			if ($perc >= 0.1)
 			{
-				#print "$id\t$perc\t$low\t$total\n";
 				my $tempgenos = join("\t",@genos);
 				$output.="$id\t$tempgenos\n";
 				$matrixID.="$id\t$perc\n";
