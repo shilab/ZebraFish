@@ -72,6 +72,7 @@ while(<FILE>)
 		}	
 	}
 }
+close FILE;
 
 open(FILE,$kid_file) || die "Can't open file $kid_file.\n";
 while(<FILE>)
