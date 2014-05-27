@@ -3,6 +3,11 @@ use strict;
 use warnings;
 
 my $filename = $ARGV[0];
+if ((@ARGV)!=1)
+{
+	print "Usage: perl filter.pl <filename>\n";
+	exit;
+}
 
 my $output;
 my $id;
