@@ -15,13 +15,15 @@ while(<FILE>)
 	{
 		if ($_=~/^chr/)
 		{
-		    my @temp = split "\t", $_;
+			my @temp = split "\t", $_;
 			my $id = $temp[0];
 			$output.="$id\t";
+			
 			$id = substr($id,3);
 			my @id = split(":",$id);
 			my $chr = $id[0];
 			$output.="$chr\t";
+			
 			@id = split("-",$id[1]);
 			my $start = $id[0];
 			my $end = $id[1];
