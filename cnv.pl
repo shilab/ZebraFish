@@ -2,6 +2,8 @@
 use strict;
 use warnings;
 
+#cnv.pl converts the raw CNV callfile to a numerical matrix. 
+
 my $output="id\t";
 my %cnvs;
 my %ids;
@@ -23,6 +25,7 @@ while (<FILE>)
 	my $id=$temp[0];
 	$ids{$id}="";
 	
+	#Convert the descriptive events to numerical equivalents
 	if ($event eq "Homozygous Copy Loss")
 	{
 		$event=0;
@@ -39,11 +42,14 @@ while (<FILE>)
 	{
 		$event=4;
 	}
+	#For each CNV add the correpsonding fish with their events
+	#The value of the hash will be fish-event
 	my $value="$id-$event\t";
 	$cnvs{$region}.=$value;
 }
 close FILE;
 
+#Add the ids to the header
 my @ids=keys %ids;
 foreach(@ids)
 {
@@ -51,24 +57,30 @@ foreach(@ids)
 }
 $output.="\n";
 
+#Add the CN for each CNV to the matrix
 my @keys=keys %cnvs;
 foreach(@keys)
 {
 	my %fish;
+	#Recover the fish and CN for each CNV
 	my @temps=split("\t",$cnvs{$_});
 	foreach(@temps)
 	{
+		#Separate the fish and CN, and put them into the fish hash
 		my @val=split("-",$_);
 		$fish{$val[0]}=$val[1];
 	}
+	#Add the CN id to the matrix
 	$output.="$_\t";
 	
 	foreach(@ids)
 	{
+		#Add a fish's CN to the matrix if it has a change
 		if (exists $fish{$_})
 		{
 			$output.="$fish{$_}\t";
 		}
+		#For fish that don't have a different CN, just add 2
 		else 
 		{
 			$output.="2\t";
