@@ -2,11 +2,17 @@
 use strict;
 use warnings;
 
+my $MAF=0.1;
 my $filename = $ARGV[0];
-if ((@ARGV)!=1)
+if ((@ARGV)<1)
 {
-	print "Usage: perl filter.pl <filename>\n";
+	print "Usage: perl filter.pl <filename> [MAF]\n";
 	exit;
+}
+#TODO: Check if $MAF input is numeric
+if ((@ARGV)==2)
+{
+	$MAF=$ARGV[1];
 }
 
 my $output;
@@ -44,7 +50,7 @@ while (<FILE>)
 		if ($low < $total)
 		{
 			my $perc = $low/$total;
-			if ($perc >= 0.1)
+			if ($perc >= $MAF)
 			{
 				my $tempgenos = join("\t",@genos);
 				$output.="$id\t$tempgenos\n";
