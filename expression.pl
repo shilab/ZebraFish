@@ -33,7 +33,7 @@ while (<FILE>)
 	    $i++;
 	}
     }
-    else
+    elsif ($_=~/^[A-Za-z0-9]/)
     {
 	my @line = split("\t", $_);
 	$kid_output .= join ("\t", @line[@kidney]) ."\n";

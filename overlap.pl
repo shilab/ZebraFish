@@ -78,8 +78,11 @@ open(FILE,$kid_file) || die "Can't open file $kid_file.\n";
 while(<FILE>)
 {
 	chomp;
-	my @temp = split("\t",$_);
-	$kid_output.=join("\t",@temp[@kid_index]) . "\n";
+	if ($_=~/^[A-Za-z0-9]/)
+	{
+		my @temp = split("\t",$_);
+		$kid_output.=join("\t",@temp[@kid_index]) . "\n";
+	}
 }
 close FILE;
 
@@ -87,8 +90,11 @@ open(FILE,$liver_file) || die "Can't open file $liver_file.\n";
 while(<FILE>)
 {
 	chomp;
-        my @temp = split("\t",$_);
-        $liver_output.=join("\t",@temp[@liver_index]) . "\n";
+        if ($_=~/^[A-Za-z0-9]/)
+        {
+        	my @temp = split("\t",$_);
+        	$liver_output.=join("\t",@temp[@liver_index]) . "\n";
+	}
 }
 close FILE;
 
@@ -96,8 +102,11 @@ open(FILE,$cnv_file) || die "Can't open file $cnv_file.\n";
 while(<FILE>)
 {
 	chomp;
-        my @temp = split("\t",$_);
-        $cnv_output.=join("\t",@temp[@cnv_index]) ."\n";
+        if ($_=~/^[A-Za-z0-9]/)
+        {
+        	my @temp = split("\t",$_);
+        	$cnv_output.=join("\t",@temp[@cnv_index]) ."\n";
+	}
 }
 close FILE;
 

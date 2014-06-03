@@ -5,7 +5,7 @@ perl expression.pl
 perl ZebGene.pl
 echo "Overlapping and filtering";
 perl overlap.pl
-perl filter.pl CVN_matrix.out
+perl filter.pl CNV_matrix.out 0.1
 
 echo "Running analysis";
 R --no-save <<RSCRIPT
