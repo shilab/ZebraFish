@@ -1,4 +1,4 @@
-expression_filter<- function (mEQTL,pval,input_file){
+expression_filter<- function (pval,input_file){
 
 #Will Need to change location of file
 expression <- read.delim(input_file)
@@ -28,8 +28,8 @@ for(i in 1:length)
 }
 
 pvals<-pnorm(zscores,lower.tail=F)
-expression_filter<-expression[which(pvals<.01),]
+expression_filter<-expression[which(pvals<pval),]
 out_file<-paste(input_file,".filter",sep="");
-write.table(kid_expression.filt,file=out_file,sep="\t",row.names=FALSE,col.names=TRUE,quote=FALSE)
+write.table(expression_filter,file=out_file,sep="\t",row.names=FALSE,col.names=TRUE,quote=FALSE)
 return(expression_filter)
 }
