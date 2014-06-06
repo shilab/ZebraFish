@@ -6,9 +6,9 @@ expression <- read.delim(input_file)
 geneid<-expression[,1]
 
 expr_vals<-expression
-expr_vals$id<-NULL
+expr_vals[,1]<-NULL
 
-std_dev<-apply(expr_vals,1,sd)
+std_dev<-apply(expr_vals,1,sd, na.rm=T)
 
 std_dev<-std_dev-mean(std_dev,na.rm=T)
 std_dev<-std_dev/sd(std_dev,na.rm=T)
@@ -30,6 +30,6 @@ for(i in 1:length)
 pvals<-pnorm(zscores,lower.tail=F)
 expression_filter<-expression[which(pvals<pval),]
 out_file<-paste(input_file,".filter",sep="");
-write.table(expression_filter,file=out_file,sep="\t",row.names=FALSE,col.names=TRUE,quote=FALSE)
+write.table(expression_filter,file=out_file,sep="\t",eol = "\n", row.names=FALSE,col.names=TRUE,quote=FALSE)
 return(expression_filter)
 }
