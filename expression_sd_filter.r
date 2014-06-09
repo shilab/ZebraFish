@@ -1,4 +1,4 @@
-expression_filter<- function (pval,input_file){
+expression_filter<- function (pval,input_file,colNames=TRUE){
 
 #Read in input file 
 expression <- read.delim(input_file)
@@ -8,7 +8,10 @@ geneid<-expression[,1]
 
 #Grab the values, and remove the ids
 expr_vals<-expression
-expr_vals[,1]<-NULL
+if (colNames)
+{
+  expr_vals[,1]<-NULL
+}
 
 #Get the standard deviation of each row and put it in a vector
 std_dev<-apply(expr_vals,1,sd, na.rm=T)
