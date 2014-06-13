@@ -1,14 +1,10 @@
 #!/usr/bin/perl
-
-
 use strict;
-
 use warnings;
 
 
 my $file = "miRNA-Alignment#-pos";
 my $output;
-
 my $data1;
 my $data2;
 my $data3;
