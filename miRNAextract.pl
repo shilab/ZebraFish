@@ -1,11 +1,6 @@
 #!/usr/bin/perl
-
-
 use strict;
-
 use warnings;
-
-
 
 my $file_one = "miRNA_kidney_expression";
 my $file_two = "miRNA-2_0.annotations.20101222.txt";
@@ -13,6 +8,7 @@ my @needs;
 my @temp;
 my @tempp;
 my %hash;
+
 open(FILE,$file_one) || die "Can't open file $file_one.\n";
 while(<FILE>)
 {
