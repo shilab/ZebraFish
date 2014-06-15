@@ -1,24 +1,15 @@
 #!/usr/bin/perl
-
-
-use strict;
-
-use warnings;
-
-
-my $filename = "miRNA-Alignment#-posno_slash";
-
-open(FILE, $filename) || die "Can't open file $filename";
-
+use strict;use warnings;
 
 my $output="Probeid\tchr\tstart\tend\n";
 my @line;
-
 my $probeid;
 my $chr;
 my $start;
 my $end;
 
+my $filename = "miRNA-Alignment#-posno_slash";
+open(FILE, $filename) || die "Can't open file $filename";
 while(<FILE>)
 {
         $_=~ s/\r?\n$//;
