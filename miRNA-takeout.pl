@@ -1,10 +1,6 @@
 #!/usr/bin/perl
-
-
 use strict;
-
 use warnings;
-
 
 my $file = "miRNA-Alignment";
 my @line;
