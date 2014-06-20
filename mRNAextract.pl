@@ -1,11 +1,6 @@
 #!/usr/bin/perl
-
-
 use strict;
-
 use warnings;
-
-
 
 my $file_one = "miRNA_kidney_expression";
 my $file_two = "miRNA-2_0.annotations.20101222.txt";
@@ -17,7 +12,6 @@ while(<FILE>)
 {
 	@temp = split "\t",$_;
 	@needs = $temp[0];
-#	print "@needs\t";
 }
 close FILE;
 
