@@ -1,15 +1,12 @@
 #!/usr/bin/perl
-
-
 use strict;
-
 use warnings;
-
 
 my $file = "miRNA-AlignmentOnly";
 my @line;
 my @ali;
 my $output = "Probeid\tAlignment\n";
+
 open(FILE,$file) || die "Can't open file $file.\n";
 while(<FILE>)
 {
@@ -31,7 +28,7 @@ while(<FILE>)
 		next;
 	}
 }
-	$output.= "@line\n";
+$output.= "@line\n";
 close FILE;
 
 open FILE, ">". "$file"."#-pos" or die $!;
