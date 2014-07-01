@@ -21,43 +21,59 @@ my $matrixID="";
 open(FILE,$filename) || die "Can't open file $filename";
 while (<FILE>)
 {
-	chomp;
-	my %genocount;
-	if ($_=~/^id/)
+	my ($output_line, $id_line) = parse($_);
+	if ($output_line ne '')
 	{
-		$output.="$_\n";
+		$output.=$output_line;
 	}
-	else
+	if (length $id_line)
 	{
-		my @genos = split("\t",$_);
-		$id = shift @genos;
-		foreach (@genos)
-		{
-			$genocount{$_}++;
-		}
-		my $total;
-		my $low = scalar(@genos);
-		my @keys = keys %genocount;
-		foreach (@keys)
-		{
+		$matrixID.=$id_line;
+	}
+}
 
-				if($genocount{$_} < $low)
-				{
-					$low = $genocount{$_};
-				}
-				$total+=$genocount{$_};
-		}
-		if ($low < $total)
-		{
-			my $perc = $low/$total;
-			if ($perc >= $MAF)
-			{
-				my $tempgenos = join("\t",@genos);
-				$output.="$id\t$tempgenos\n";
-				$matrixID.="$id\t$perc\n";
-			}
-		}
-	}
+sub parse
+{
+	$_=shift(@_);
+        chomp;
+        my %genocount;
+        if ($_=~/^id/)
+        {
+		return("$_\n");
+                #$output.="$_\n";
+        }
+        else
+        {
+                my @genos = split("\t",$_);
+                $id = shift @genos;
+                foreach (@genos)
+                {
+                        $genocount{$_}++;
+                }
+                my $total=0;
+                my $low = scalar(@genos);
+                my @keys = keys %genocount;
+                foreach (@keys)
+                {
+
+                                if($genocount{$_} < $low)
+                                {
+                                        $low = $genocount{$_};
+                                }
+                                $total+=$genocount{$_};
+                }
+                if ($low < $total)
+                {
+                        my $perc = $low/$total;
+                        if ($perc >= $MAF)
+                        {
+                                my $tempgenos = join("\t",@genos);
+                                #$output.="$id\t$tempgenos\n";
+                                #$matrixID.="$id\t$perc\n";
+				return("$id\t$tempgenos\n", "$id\t$perc\n");
+                        }
+                }
+        }
 }
 
 open FILE,">"."$filename" . ".filter" or die $!;
