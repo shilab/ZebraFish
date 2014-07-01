@@ -14,3 +14,5 @@ my @output = parse('chr18:45,085,698-45,098,051	2	2	2	2	2	2	2	2	2	2	4	2	2	2	2	2	
 my @expected = ("chr18:45,085,698-45,098,051	2	2	2	2	2	2	2	2	2	2	4	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	4	4\n", "chr18:45,085,698-45,098,051	0.1\n");
 
 is_deeply (\@output,\@expected,'array test');
+
+is (parse('chr9:16,634,605-16,676,533	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	3	2	2	2	2	2	2	2	2	2	4'), '', 'Two samples different, with different genotypes');
