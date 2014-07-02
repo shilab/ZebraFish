@@ -10,9 +10,17 @@ is (parse('id	F0M	Tu57	Tu21	Tu42	Tu41	Tu53	Tu52	Tu50	Tu43	Tu2	Tu6	Tu49	Tu46	Tu58
 is (parse('chr9:16,634,605-16,676,533   2       2       2       2       2       2       2       2       2       2       2       2       2       2       2       2       2       2       2       2'), '','All the same genotype');
 
 is (parse('chr9:16,634,605-16,676,533	2	2	2	2	2	2	2	2	3	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2'), '', 'One sample different');
-my @output = parse('chr18:45,085,698-45,098,051	2	2	2	2	2	2	2	2	2	2	4	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	4	4'); #, "chr18:45,085,698-45,098,051	0.1\n", 'Three samples different');
+my @output = parse('chr18:45,085,698-45,098,051	2	2	2	2	2	2	2	2	2	2	4	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	4	4');
 my @expected = ("chr18:45,085,698-45,098,051	2	2	2	2	2	2	2	2	2	2	4	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	4	4\n", "chr18:45,085,698-45,098,051	0.1\n");
 
 is_deeply (\@output,\@expected,'array test');
 
 is (parse('chr9:16,634,605-16,676,533	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	3	2	2	2	2	2	2	2	2	2	4'), '', 'Two samples different, with different genotypes');
+
+is (parse('chr9:16,634,605-16,676,533	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	3	4	4	4'), '', 'Two samples different, with different genotypes');
+
+@output = parse('chr9:16,634,605-16,676,533	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	3	3	3	3	4	4	4');
+
+@expected = ("chr9:16,634,605-16,676,533	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	3	3	3	3	4	4	4\n","chr9:16,634,605-16,676,533\t0.1\n");
+
+is_deeply (\@output,\@expected,'Multi-genotype');
