@@ -21,6 +21,22 @@ while (<FILE>)
 }
 close FILE;
 
+
+#Add the ids to the header
+my @ids=keys %ids;
+foreach(@ids)
+{
+	$output.="$_\t";
+}
+$output.="\n";
+
+#Add the CN for each CNV to the matrix
+my @keys=keys %cnvs;
+foreach(@keys)
+{
+	my ($id, $cnvs) = parse_keys($_);
+	$output.="$id\t$cnvs\n";
+}
 sub parse
 {
 	$_=shift(@_);
@@ -54,23 +70,6 @@ sub parse
         #The value of the hash will be fish-event
         my $value="$id-$event\t";
 	return ($region, $value);
-}
-
-#Add the ids to the header
-my @ids=keys %ids;
-foreach(@ids)
-{
-	print "$_\n";
-	$output.="$_\t";
-}
-$output.="\n";
-
-#Add the CN for each CNV to the matrix
-my @keys=keys %cnvs;
-foreach(@keys)
-{
-	my ($id, $cnvs) = parse_keys($_);
-	$output.="$id\t$cnvs\n";
 }
 
 sub parse_keys
