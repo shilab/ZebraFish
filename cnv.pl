@@ -68,32 +68,43 @@ $output.="\n";
 my @keys=keys %cnvs;
 foreach(@keys)
 {
-	my %fish;
-	#Recover the fish and CN for each CNV
-	my @temps=split("\t",$cnvs{$_});
-	foreach(@temps)
-	{
-		#Separate the fish and CN, and put them into the fish hash
-		my @val=split("-",$_);
-		$fish{$val[0]}=$val[1];
-	}
-	#Add the CN id to the matrix
-	$output.="$_\t";
-	
-	foreach(@ids)
-	{
-		#Add a fish's CN to the matrix if it has a change
-		if (exists $fish{$_})
-		{
-			$output.="$fish{$_}\t";
-		}
-		#For fish that don't have a different CN, just add 2
-		else 
-		{
-			$output.="2\t";
-		}
-	}
-	$output.="\n";
+	my ($id, $cnvs) = parse_keys($_);
+	$output.="$id\t$cnvs\n";
+}
+
+sub parse_keys
+{
+	$_=shift(@_);
+        my %fish;
+        #Recover the fish and CN for each CNV
+        my @temps=split("\t",$cnvs{$_});
+        foreach(@temps)
+        {
+                #Separate the fish and CN, and put them into the fish hash
+                my @val=split("-",$_);
+                $fish{$val[0]}=$val[1];
+        }
+        #Add the CN id to the matrix
+        my $id = "$_\t";
+	#$output.="$_\t";
+
+	my $line;
+        foreach(@ids)
+        {
+                #Add a fish's CN to the matrix if it has a change
+                if (exists $fish{$_})
+                {
+                        $line.="$fish{$_}\t";
+			#$output.="$fish{$_}\t";
+                }
+                #For fish that don't have a different CN, just add 2
+                else
+                {
+                        $line.="2\t";
+			#$output.="2\t";
+                }
+        }
+	return($id,$line);
 }
 
 open FILE, ">". "CNV_matrix" or die $!;
