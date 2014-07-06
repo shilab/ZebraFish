@@ -1,18 +1,13 @@
 #!/usr/bin/perl
-
-
 use strict;
-
 use warnings;
 
 
 my $filename = "miRNA-2_0.annotations.20101222.txt";
-
-open(FILE, $filename) || die "Can't open file $filename";
-
-
 my $output="Probeid\tchr\tstart\tend\n";
 my @line;
+
+open(FILE, $filename) || die "Can't open file $filename";
 while(<FILE>)
 {
 #        $_=~ s/\r?\n$//;
