@@ -6,7 +6,7 @@ use strict;
 use warnings;
 
 
-my $output = "Probeid\tchr\tstart\tend\n";
+my $output = "Probeid\tchr\tposition\n";
 
 my $file_one = "kidney_expression00";
 my $file_two = "miRNA-2_0.annotations.20101222.txt";
@@ -25,6 +25,7 @@ my $id;
 my $chr;
 my $start;
 my $end;
+my $position;
 my $level3out;
 
 open(FILE,$file_one) || die "Can't open file $file_one.\n";
@@ -175,7 +176,9 @@ sub parse_three
 	@align = split(" ",$align[1]);
 	$end = $align[0];
 
-	$level3out = "$id\t$chr\t$start\t$end\n";
+	$position = ($start + $end) /2;
+
+	$level3out = "$id\t$chr\t$position\n";
 	return $level3out;
 }
 
