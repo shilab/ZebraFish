@@ -87,7 +87,7 @@ sub parse_keys
 			$fish{$val[0]}=$val[1];
 		}
 		#Add the CN id to the matrix
-		my $id = "$_\t";
+		my $id = "$_";
 		#$output.="$_\t";
 
 		my $line;

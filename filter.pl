@@ -34,13 +34,13 @@ while (<FILE>)
 
 sub parse
 {
-	$_=shift(@_);
+		$_=shift(@_);
         chomp;
         my %genocount;
         if ($_=~/^id/)
         {
-		return("$_\n");
-                #$output.="$_\n";
+			return("$_\n");
+            #$output.="$_\n";
         }
         else
         {
@@ -48,7 +48,7 @@ sub parse
                 $id = shift @genos;
                 foreach (@genos)
                 {
-                        $genocount{$_}++;
+			        $genocount{$_}++;
                 }
                 my $total=0;
                 my $low = scalar(@genos);
@@ -62,15 +62,16 @@ sub parse
                                 }
                                 $total+=$genocount{$_};
                 }
+				print "$low\t$total\n";
                 if ($low < $total)
                 {
                         my $perc = $low/$total;
-                        if ($perc >= $MAF)
+						if ($perc >= $MAF)
                         {
                                 my $tempgenos = join("\t",@genos);
                                 #$output.="$id\t$tempgenos\n";
                                 #$matrixID.="$id\t$perc\n";
-				return("$id\t$tempgenos\n", "$id\t$perc\n");
+								return("$id\t$tempgenos\n", "$id\t$perc\n");
                         }
                 }
         }
