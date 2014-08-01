@@ -29,7 +29,7 @@ is_deeply(\@got,\@expected);
 
 is_deeply(\@got,\@expected);
 
-@expected = ("chr9:16,634,605-16,676,533\t","2	2	2	2	2	2	2	2	2	3	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2\t");
+@expected = ("chr9:16,634,605-16,676,533","2	2	2	2	2	2	2	2	2	3	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2\t");
 @got = parse_keys('chr9:16,634,605-16,676,533');
 
 is_deeply(\@got,\@expected);

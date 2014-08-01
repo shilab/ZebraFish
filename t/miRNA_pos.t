@@ -20,7 +20,7 @@ is($got_caseA_2,"14qII-4_x_st\tchr14:101420711-101420784 (+)");
 
 # if ok:
 my $got_caseA_3 = $got_caseA_2;
-is(parse_three($got_caseA_3),"14qII-4_x_st\t14\t101420711\t101420784\n");
+is(parse_three($got_caseA_3),"14qII-4_x_st\t14\t101420747.5\n");
 
 print "Case A was sucessfully taken out its positions and chromosome number.\n\n";
 
@@ -41,7 +41,7 @@ is($got_caseB_2,"hp_mmu-mir-466b-1_x_st\t2:10395846-10395927 (+) \n");
 
 # if ok:
 my $got_caseB_3 = $got_caseB_2;
-is(parse_three($got_caseB_3),"hp_mmu-mir-466b-1_x_st\t2\t10395846\t10395927\n");
+is(parse_three($got_caseB_3),"hp_mmu-mir-466b-1_x_st\t2\t10395886.5\n");
 
 print "Case B was sucessfully taken out its positions and chromosome number.\n\n";
 
