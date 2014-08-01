@@ -1,0 +1,7 @@
+library(MatrixEQTL)
+source('source('meQTL_func.R')
+source('CorrBoxPlotZeb.R')
+cismeqtl('CNV_matrix.out.filter','CNV_position','liver_expression.out.filter','gene_position','liver_cis_results',0.05)
+CorrBoxPlot(me, .2, expr, genot, visual=T, 'liver_plots.pdf')
+cismeqtl('CNV_matrix.out.filter','CNV_position','kidney_expression.out.filter','gene_position','kidney_cis_results',0.05)
+CorrBoxPlot(me, .2, expr, genot, visual=T, 'kidney_plots.pdf')
