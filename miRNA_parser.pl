@@ -6,7 +6,7 @@ use warnings;
 my $filename = shift(@ARGV);
 my $output_file = shift(@ARGV);
 my $output;
-my @sample=(0);
+my @sample;
 my @set;
 my $col=0;
 open(FILE,$filename) || die "Can't open file $filename";
@@ -25,7 +25,8 @@ while (<FILE>)
 			}
 			$col++;
 		}
-		$output .= join ("\t", @set[@sample]) . "\n";
+		$output .= "id\t" . join ("\t", @set[@sample]) . "\n";
+		unshift(@sample,0);
 	}
 	else
 	{
