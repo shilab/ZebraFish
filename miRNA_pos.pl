@@ -1,37 +1,25 @@
 #!/usr/bin/perl
-
-
 use strict;
-
 use warnings;
-
 
 my $output = "Probeid\tchr\tposition\n";
 
-my $file_one = "kidney_expression00";
-my $file_two = "miRNA-2_0.annotations.20101222.txt";
+#my $file_one = "kidney_expression00";
+my $input_file = shift(@ARGV);
+my $output_file = shift(@ARGV);
+my $annotation_file = "miRNA-2_0.annotations.20101222.txt";
 
-my $keys;
 my $values;
 my @needs;
-my @temp;
 my %hash;
 my @k;
 
 my @line;
-my $level2out;
-my $id;
 
-my $chr;
-my $start;
-my $end;
-my $position;
-my $level3out;
-
-open(FILE,$file_one) || die "Can't open file $file_one.\n";
+open(FILE,$input_file) || die "Can't open file $input_file.\n";
 while(<FILE>)
 {
-	@temp = split "\t",$_;
+	my @temp = split "\t",$_;
 	if($_ =~/^Pro/)
 	{
 		next;
@@ -44,7 +32,7 @@ while(<FILE>)
 close FILE;
 #print "@needs\n";
 
-open(FILE,$file_two) || die "Can't open file $file_two.\n";
+open(FILE,$annotation_file) || die "Can't open file $annotation_file.\n";
 while(<FILE>)
 {
 	my @t = split "\r",$_;
@@ -68,11 +56,9 @@ foreach(@needs)
 	push(@k,"$_\t$hash{$_}\n");	
 }
 
-#print "@k\n";
-
 foreach(@k)
 {
-	$level2out = parse_two($_);
+	my $level2out = parse_two($_);
 	if($level2out eq " ")
 	{
 		next;
@@ -92,17 +78,18 @@ foreach(@line)
 sub parse_one
 {
 	$_ = shift(@_);
-	@temp = split "\t",$_;
-	$keys = $temp[0];
-	$values = $temp[7];
+	my @temp = split "\t",$_;
+	my $keys = $temp[0];
+	my $values = $temp[7];
 	return ($keys, $values);
 }
 
 sub parse_two
 {
+	my $level2out;
 	$_ = shift(@_);
 	my @a = split "\t", $_;
-	$id = $a[0];
+	my $id = $a[0];
 	my $alignment = $a[1];
 	if($alignment =~ /^I/ ||$alignment =~ /^V/|| $alignment =~ /^\d:/ ||$alignment =~ /^\d\d:/|| $alignment =~ /^chr\d:/ || $alignment =~ /^chr\d\d:/)
 	{
@@ -133,9 +120,11 @@ sub parse_two
 
 sub parse_three
 {
+	my $level3out;
+	my $chr;
 	$_ = shift(@_);
 	my @tem = split "\t", $_;
-	$id = $tem[0];
+	my $id = $tem[0];
 
 	my $align = $tem[1];
 	$align = substr($align,0);
@@ -171,17 +160,17 @@ sub parse_three
 	}
 	
 	@align = split("-",$align[1]);
-	$start = $align[0];
+	my $start = $align[0];
 
 	@align = split(" ",$align[1]);
-	$end = $align[0];
+	my $end = $align[0];
 
-	$position = ($start + $end) /2;
+	my $position = ($start + $end) /2;
 
 	$level3out = "$id\t$chr\t$position\n";
 	return $level3out;
 }
 
-open FILE, ">". "miRNA_#_and_position" or die $!;
+open FILE, ">". "$output_file" or die $!;
 print FILE $output;
 close FILE;
