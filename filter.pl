@@ -62,7 +62,6 @@ sub parse
                                 }
                                 $total+=$genocount{$_};
                 }
-				print "$low\t$total\n";
                 if ($low < $total)
                 {
                         my $perc = $low/$total;
