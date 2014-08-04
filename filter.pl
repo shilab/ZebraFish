@@ -26,7 +26,7 @@ while (<FILE>)
 	{
 		$output.=$output_line;
 	}
-	if (length $id_line)
+	if (defined $id_line)
 	{
 		$matrixID.=$id_line;
 	}
