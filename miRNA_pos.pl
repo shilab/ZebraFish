@@ -4,7 +4,6 @@ use warnings;
 
 my $output = "Probeid\tchr\tposition\n";
 
-#my $file_one = "kidney_expression00";
 my $input_file = shift(@ARGV);
 my $output_file = shift(@ARGV);
 my $annotation_file = "miRNA-2_0.annotations.20101222.txt";
@@ -30,7 +29,6 @@ while(<FILE>)
 	}
 }
 close FILE;
-#print "@needs\n";
 
 open(FILE,$annotation_file) || die "Can't open file $annotation_file.\n";
 while(<FILE>)
@@ -69,7 +67,6 @@ foreach(@k)
 	}
 }
 
-#print @line;
 foreach(@line)
 {	
 	$output .= parse_three($_);
