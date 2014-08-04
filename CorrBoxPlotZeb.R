@@ -40,6 +40,9 @@ CorrBoxPlot <- function (mEQTL,threshold,expr,genot,visual=FALSE,cis=TRUE){
   if (visual){ #Perform the plots
     #There can be three values (unphased) or four (phased)
     genotypes <- range(genot[,2:ncol(genot)])[1]:range(genot[,2:ncol(genot)])[2]
+    
+    pdf(file = "box_plots.pdf")
+    par(mfcol = c(2,2))
     for (i in 1:nrow(eqtls)){
       #Prepare the matrix
       pheno <- as.numeric(phenotype[[i]])
@@ -55,6 +58,7 @@ CorrBoxPlot <- function (mEQTL,threshold,expr,genot,visual=FALSE,cis=TRUE){
                          "P-value: ",format(eqtls$pvalue[i],2)," FDR: ",format(eqtls$FDR[i],2)),
               main=paste(as.character(eqtls$snps[i])," - ",as.character(eqtls$gene[i])))
     }
+    dev.off()
   }
   return(corr)
 }
