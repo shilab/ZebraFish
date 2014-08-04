@@ -1,4 +1,4 @@
-expression_filter<- function (pval,input_file,colNames=TRUE){
+expression_filter<- function (input_file,pval,colNames=TRUE){
 
 #Read in input file 
 expression <- read.delim(input_file)

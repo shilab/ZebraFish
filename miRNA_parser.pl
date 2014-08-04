@@ -2,9 +2,11 @@
 use strict;
 use warnings;
 
-my $filename="All-liver-tissue-miRNA-result.csv";
-my $kid_output;
-my @sample=(0);
+#my $filename="All-liver-tissue-miRNA-result.csv";
+my $filename = shift(@ARGV);
+my $output_file = shift(@ARGV);
+my $output;
+my @sample;
 my @set;
 my $col=0;
 open(FILE,$filename) || die "Can't open file $filename";
@@ -23,16 +25,17 @@ while (<FILE>)
 			}
 			$col++;
 		}
-		$kid_output .= join ("\t", @set[@sample]) . "\n";
+		$output .= "id\t" . join ("\t", @set[@sample]) . "\n";
+		unshift(@sample,0);
 	}
 	else
 	{
 		my @line = split(",", $_);
-		$kid_output .= join ("\t", @line[@sample]) ."\n";
+		$output .= join ("\t", @line[@sample]) ."\n";
 	}
 }
 close FILE;
 
-open FILE, ">". "liver_expression00" or die $!;
-print FILE $kid_output;
+open FILE, ">". "$output_file" or die $!;
+print FILE $output;
 close FILE;
