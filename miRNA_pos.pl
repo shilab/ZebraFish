@@ -2,7 +2,8 @@
 use strict;
 use warnings;
 
-my $output = "Probeid\tchr\tposition\n";
+my $output1 = "id\tchr\tposition\n";
+my $output2 = "id\tchr\tstart\tend\n";
 
 my $input_file = shift(@ARGV);
 my $output_file = shift(@ARGV);
@@ -69,7 +70,9 @@ foreach(@k)
 
 foreach(@line)
 {	
-	$output .= parse_three($_);
+	my ($out_string1, $out_string2) = parse_three($_);
+	$output1.=$out_string1;
+	$output2.=$out_string2;
 }
 
 sub parse_one
@@ -164,10 +167,15 @@ sub parse_three
 
 	my $position = ($start + $end) /2;
 
+	my $position_gene = "$id\t$chr\t$start\t$end\n";
 	$level3out = "$id\t$chr\t$position\n";
-	return $level3out;
+	return($level3out, $position_gene);
 }
 
-open FILE, ">". "$output_file" or die $!;
-print FILE $output;
+open FILE, ">". "$output_file.snps" or die $!;
+print FILE $output1;
+close FILE;
+
+open FILE, ">" . "$output_file.gene" or die $!;
+print FILE $output2;
 close FILE;
