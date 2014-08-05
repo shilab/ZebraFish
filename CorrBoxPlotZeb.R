@@ -50,9 +50,10 @@ CorrBoxPlot <- function (mEQTL,threshold,expr,genot,visual=FALSE,pdf_file="",cis
         values[[j]] <- pheno[which(genotype[[i]]==genotypes[j])]
       }
       #Plot the boxplots
-      if (length(genotypes)==3){cats=c(0,1,2)}
-      else {cats=c(0,1,2,3,4)}
-      boxplot(values,boxwex=0.5,ylab=paste(as.character(eqtls$gene[i])," expression"), names=cats,
+      #if (length(genotypes)==3){cats=c(0,1,2)}
+      #else {cats=c(0,1,2,3,4)}
+	  cats=seq(0,length(genotypes)-1)
+      boxplot(values,boxwex=0.5,ylab=paste(as.character(eqtls$gene[i])," expression"), ylim=c(0,20),names=cats,
               xlab=paste(as.character(eqtls$snps[i])," genotype","\nCorrelation: ",format(corr[i],2),
                          "P-value: ",format(eqtls$pvalue[i],2)," FDR: ",format(eqtls$FDR[i],2)),
               main=paste(as.character(eqtls$snps[i])," - ",as.character(eqtls$gene[i])))
