@@ -9,9 +9,9 @@ my @cnv_index;
 my @kid_index;
 my @liver_index;
 
-my $kid_file = "kidney_expression";
-my $liver_file = "liver_expression";
-my $cnv_file = "kidney_expression00";
+my $kid_file = "kidney_miRNA_expression";
+my $liver_file = "liver_miRNA_expression";
+my $cnv_file = "CNV_matrix";
 
 my $kid_output;
 my $liver_output;
@@ -111,14 +111,14 @@ while(<FILE>)
 close FILE;
 
 
-open FILE, ">". "miRNA_kidney_expression.out" or die $!;
+open FILE, ">". "kidney_miRNA_expression.miR_expr_out" or die $!;
 print FILE $kid_output;
 close FILE;
 
-open FILE, ">". "miRNA_liver_expression.out" or die $!;
+open FILE, ">". "liver_miRNA_expression.miR_expr_out" or die $!;
 print FILE $liver_output;
 close FILE;
 
-open FILE, ">". "miRNA_CNV_matrix.out" or die $!;
+open FILE, ">". "CNV_matrix.miR_expr_out" or die $!;
 print FILE $cnv_output;
 close FILE;
