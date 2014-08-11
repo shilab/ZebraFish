@@ -1,39 +1,83 @@
-all: data #analysis
+data: %CISresults
 
-data: CNV_matrix.out.filter %out.filter
+.SECONDARY:
 
-CNV_matrix: cnv.pl zebrafishallcallsTissuespecificcomparisonnexus6.0.txt
-	perl cnv.pl
+%CISresults: CNV_matrix.out.filter CNV_position liver_expression.out.filter gene_position miR_expression miR_CNV
+	R --no-save < all_meqtl.R
 
-%_expression: expression.pl gene_all_filesRMA-GENE-FULL-Group1.txt
-	perl expression.pl
+miR_expression: liver_miRNA_expression.miR_out kidney_miRNA_expression.miR_out liver_miRNA_pos.snps kidney_miRNA_pos.snps  liver_expression.miR_out.filter kidney_expression.miR_out.filter liver_miRNA_expression.miR_expr_out.filter kidney_miRNA_expression.miR_expr_out.filter
 
-%.out: overlap.pl %_expression CNV_matrix
-	perl overlap.pl
+miR_CNV: CNV_matrix.miR_expr_out.filter CNV_position liver_miRNA_expression.miR_expr_out liver_miRNA_pos.gene liver_miRNA_pos.gene kidney_miRNA_pos.gene
 
-#%_expression.out.filter: expression_sd_filter.R %_expression.out
-#	R --no-save < runFilter.R
-
-CNV_matrix.out.filter: CNV_matrix.out filter.pl
-	perl filter.pl CNV_matrix.out 0.05
-
-CNV_position: cnv_pos.pl CNV_matrix
-	perl cnv_pos.pl
-
-gene_position: ZebGene.pl ZebGene-1_1-st-v1.r4.f38.design.transcript.design-time.pre-release.20110822.csv
+gene_position: ZebGene-1_1-st-v1.r4.f38.design.transcript.design-time.pre-release.20110822.csv 
 	perl ZebGene.pl
 
-%_miRNA_matrix: All-liver-tissue-miRNA-result.csv All-kidney-tissue-miRNA-result.csv miRNA_parser.pl
-	perl miRNA_parser.pl All-liver-tissue-miRNA-result.csv liver_miRNA_matrix
-	perl miRNA_parser.pl All-kidney-tissue-miRNA-result.csv kidney_miRNA_matrix
+CNV_position: CNV_matrix
+	perl cnv_pos.pl
 
-%_miRNA_pos: %_miRNA_matrix miRNA_pos.pl
-	perl miRNA_pos.pl kidney_miRNA_matrix kidney_miRNA_pos
-	perl miRNA_pos.pl liver_miRNA_matrix liver_miRNA_pos
+CNV_matrix.out.filter: CNV_matrix.out
+	perl filter.pl CNV_matrix.out 0.05
 
-%.miR_out: 
-	perl overlap_miRNA.pl kidney_expression kidney_miRNA_matrix
-	perl overlap_miRNA.pl liver_expression liver_miRNA_matrix 
+CNV_matrix.out: CNV_matrix liver_expression kidney_expression
+	perl overlap.pl
 
-%out.filter: %.miR_out
+kidney_expression.out: CNV_matrix.out
+	touch kidney_expression.out
+
+liver_expression.out: kidney_expression.out
+	touch liver_expression.out
+
+CNV_matrix: 
+	perl cnv.pl
+
+kidney_expression:
+	perl expression.pl
+
+liver_expression: kidney_expression
+
+liver_expression.out.filter: liver_expression.out kidney_expression.out kidney_expression.miR_out liver_expression.miR_out liver_miRNA_expression.miR_expr_out kidney_miRNA_expression.miR_expr_out
 	R --no-save < runFilter.R
+
+kidney_expression.out.filter: liver_expression.out.filter
+
+liver_expression.miR_out.filter: kidney_expression.out.filter
+
+kidney_expression.miR_out.filter: liver_expression.miR_out.filter
+
+kidney_miRNA_expression.miR_expr_out.filter: kidney_expression.miR_out.filter
+
+liver_miRNA_expression.miR_expr_out.filter: kidney_miRNA_expression.miR_expr_out.filter
+
+kidney_expression.miR_out: kidney_expression kidney_miRNA_expression liver_miRNA_expression
+	perl overlap_miRNA.pl kidney_expression kidney_miRNA_expression
+liver_expression.miR_out: liver_expression liver_miRNA_expression kidney_miRNA_expression
+	perl overlap_miRNA.pl liver_expression liver_miRNA_expression
+
+liver_miRNA_expression.miR_out: liver_expression.miR_out 
+
+kidney_miRNA_expression.miR_out: kidney_expression.miR_out
+
+CNV_matrix.miR_expr_out.filter: CNV_matrix.miR_expr_out
+	perl filter.pl CNV_matrix.miR_expr_out 0.05
+
+CNV_matrix.miR_expr_out: CNV_matrix
+	perl miRNA_overlap.pl
+
+kidney_miRNA_expression.miR_expr_out: CNV_matrix.miR_expr_out liver_miRNA_expression kidney_miRNA_expression
+
+liver_miRNA_expression.miR_expr_out: kidney_miRNA_expression.miR_expr_out
+
+kidney_miRNA_pos.snps: kidney_miRNA_expression 
+	perl miRNA_pos.pl kidney_miRNA_expression kidney_miRNA_pos
+
+kidney_miRNA_pos.gene: kidney_miRNA_pos.snps
+
+liver_miRNA_pos.snps: liver_miRNA_expression
+	perl miRNA_pos.pl liver_miRNA_expression liver_miRNA_pos
+
+liver_miRNA_pos.gene: liver_miRNA_pos.snps
+
+kidney_miRNA_expression: 
+	perl miRNA_parser.pl All-kidney-tissue-miRNA-result.csv kidney_miRNA_expression
+liver_miRNA_expression:
+	perl miRNA_parser.pl All-liver-tissue-miRNA-result.csv liver_miRNA_expression
