@@ -20,7 +20,7 @@ open(FILE,$input_file) || die "Can't open file $input_file.\n";
 while(<FILE>)
 {
 	my @temp = split "\t",$_;
-	if($_ =~/^Pro/)
+	if($_ =~/^id/)
 	{
 		next;
 	}
