@@ -11,7 +11,7 @@ my @liver_index;
 
 my $kid_file = "kidney_expression";
 my $liver_file = "liver_expression";
-my $cnv_file = "CNV_matrix";
+my $cnv_file = "CNV_matrix.newID";
 
 my $kid_output;
 my $liver_output;
@@ -119,6 +119,6 @@ open FILE, ">". "liver_expression.out" or die $!;
 print FILE $liver_output;
 close FILE;
 
-open FILE, ">". "CNV_matrix.out" or die $!;
+open FILE, ">". "CNV_matrix.newID.out" or die $!;
 print FILE $cnv_output;
 close FILE;
