@@ -37,8 +37,8 @@ CorrBoxPlot <- function (mEQTL,threshold,expr,genot,visual=FALSE,pdf_file="",cis
     corr[i]   <- cor(as.numeric(phenotype[[i]]),as.numeric(genotype[[i]]), use="pairwise.complete.obs")
   }
   
-  if (visual){ #Perform the plots
-    #There can be three values (unphased) or four (phased)
+  if (visual){ 
+  	#Perform the plots
     pdf(paste('./',pdf_file,sep=""))
 	par(mfcol = c(2, 2))
 	genotypes <- range(genot[,2:ncol(genot)])[1]:range(genot[,2:ncol(genot)])[2]
