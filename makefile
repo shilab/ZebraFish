@@ -31,7 +31,7 @@ CNV_matrix:
 	perl cnv.pl
 
 CNV_matrix.newID: CNV_matrix
-	perl add_new_ids.pl
+	perl add_new_ids.pl CNV_matrix
 
 kidney_expression:
 	perl expression.pl
