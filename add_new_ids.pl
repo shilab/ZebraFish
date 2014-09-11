@@ -6,8 +6,8 @@ my $output="";
 my %oldID;
 my %newID;
 my %combined_ID;
-my $old_IDfile = "CNV_old_with_ID";
-my $new_IDfile = "CNV_new_positions";
+my $old_IDfile = "old_CNV_with_ID";
+my $new_IDfile = "new_CNV_positions";
 my $CNV_file = $ARGV[0];
 my %CNV_data;
 
