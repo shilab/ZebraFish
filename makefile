@@ -1,9 +1,15 @@
-data: %CISresults
+analysis: CISresults
+
+clean:
+	rm liv* kid* CNV* gene_position meQTL_filtered_input
 
 .SECONDARY:
 
-%CISresults: CNV_matrix.newID.out.filter CNV_position liver_expression.out.filter gene_position miR_expression miR_CNV
-	R --no-save < all_meqtl.R
+CISresults: CNV_matrix.newID.out.filter CNV_position liver_expression.out.filter gene_position miR_expression miR_CNV covariates
+	R --no-save < meqtlrun.R
+
+covariates: CNV_matrix.newID.out.filter CNV_position liver_expression.out.filter gene_position miR_expression miR_CNV
+	R --no-save < pca_and_covariates.R
 
 miR_expression: liver_miRNA_expression.miR_out kidney_miRNA_expression.miR_out liver_miRNA_pos.snps kidney_miRNA_pos.snps  liver_expression.miR_out.filter kidney_expression.miR_out.filter liver_miRNA_expression.miR_expr_out.filter kidney_miRNA_expression.miR_expr_out.filter
 
@@ -15,8 +21,11 @@ gene_position: ZebGene-1_1-st-v1.r4.f38.design.transcript.design-time.pre-releas
 CNV_position: CNV_matrix.newID
 	perl cnv_pos.pl
 
-CNV_matrix.newID.out.filter: CNV_matrix.newID.out
-	perl filter.pl CNV_matrix.newID.out 0.05
+CNV_matrix.newID.out.filter: CNV_matrix.newID.out CNV_matrix.newID.miR_expr_out
+	R --no-save < maf_filter.R
+
+#CNV_matrix.newID.out.filter: CNV_matrix.newID.out
+#	perl filter.pl CNV_matrix.newID.out 0.05
 
 CNV_matrix.newID.out: CNV_matrix.newID liver_expression kidney_expression
 	perl overlap.pl
@@ -60,10 +69,12 @@ liver_miRNA_expression.miR_out: liver_expression.miR_out
 
 kidney_miRNA_expression.miR_out: kidney_expression.miR_out
 
-CNV_matrix.newID.miR_expr_out.filter: CNV_matrix.newID.miR_expr_out
-	perl filter.pl CNV_matrix.newID.miR_expr_out 0.05
+CNV_matrix.newID.miR_expr_out.filter: CNV_matrix.newID.out.filter 
 
-CNV_matrix.newID.miR_expr_out: CNV_matrix.newID
+#CNV_matrix.newID.miR_expr_out.filter: CNV_matrix.newID.miR_expr_out
+#	perl filter.pl CNV_matrix.newID.miR_expr_out 0.05
+
+CNV_matrix.newID.miR_expr_out: CNV_matrix.newID kidney_miRNA_expression liver_miRNA_expression
 	perl miRNA_overlap.pl
 
 kidney_miRNA_expression.miR_expr_out: CNV_matrix.newID.miR_expr_out liver_miRNA_expression kidney_miRNA_expression
