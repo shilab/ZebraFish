@@ -45,7 +45,7 @@ CorrBoxPlot <- function (mEQTL,threshold,expr,genot,visual=FALSE,pdf_file="",cis
     for (i in 1:nrow(eqtls)){
       #Prepare the matrix
       pheno <- as.numeric(phenotype[[i]])
-      values <- NULL;
+      values <- list();
       for (j in 1:length(genotypes)){
         values[[j]] <- pheno[which(genotype[[i]]==genotypes[j])]
       }
