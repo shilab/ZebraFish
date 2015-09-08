@@ -32,8 +32,8 @@ CorrBoxPlot <- function (mEQTL,threshold,expr,genot,visual=FALSE,pdf_file="",cis
   }
   
   for (i in 1:nrow(eqtls)){
-    phenotype[[i]] <- expr[which(expr$id==as.character(eqtls$gene[i])),2:ncol(expr)]
-    genotype[[i]]  <- genot[which(genot$id==as.character(eqtls$snps[i])),2:ncol(genot)]
+    phenotype[[i]] <- expr[which(rownames(expr)==as.character(eqtls$gene[i])),2:ncol(expr)]
+    genotype[[i]]  <- genot[which(rownames(genot)==as.character(eqtls$snps[i])),2:ncol(genot)]
     corr[i]   <- cor(as.numeric(phenotype[[i]]),as.numeric(genotype[[i]]), use="pairwise.complete.obs")
   }
   
@@ -50,10 +50,8 @@ CorrBoxPlot <- function (mEQTL,threshold,expr,genot,visual=FALSE,pdf_file="",cis
         values[[j]] <- pheno[which(genotype[[i]]==genotypes[j])]
       }
       #Plot the boxplots
-      #if (length(genotypes)==3){cats=c(0,1,2)}
-      #else {cats=c(0,1,2,3,4)}
 	  cats=seq(0,length(genotypes)-1)
-      boxplot(values,boxwex=0.5,ylab=paste(as.character(eqtls$gene[i])," expression"), ylim=c(0,20),names=cats,
+      boxplot(values,boxwex=0.5,ylab=paste(as.character(eqtls$gene[i])," expression"), ylim=c(0,max(phenotype[[i]])),names=cats,
               xlab=paste(as.character(eqtls$snps[i])," genotype","\nCorrelation: ",format(corr[i],2),
                          "P-value: ",format(eqtls$pvalue[i],2)," FDR: ",format(eqtls$FDR[i],2)),
               main=paste(as.character(eqtls$snps[i])," - ",as.character(eqtls$gene[i])))
