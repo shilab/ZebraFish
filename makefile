@@ -1,8 +1,12 @@
-analysis: CISresults
+analysis: setup CISresults
 
 clean:
 	rm liv* kid* CNV* data/gene_position meQTL_filtered_input
 	rm data/liv* data/kid* data/CNV*
+	rm results/*
+
+setup:
+	mkdir -p results
 
 .SECONDARY:
 

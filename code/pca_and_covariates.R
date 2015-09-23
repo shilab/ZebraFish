@@ -19,12 +19,12 @@ gene$fileSliceSize = 2000;
 #TODO: Fix filenames
 
 snps$LoadFile('data/CNV_matrix.newID.out.filter')
-pdf('CNV-pca.pdf')
+pdf('results/CNV-pca.pdf')
 plot(prcomp(as.matrix(snps)),type='l',main='CNV PCA')
 dev.off()
 
 gene$LoadFile('data/kidney_expression.out')
-pdf('kidney_expression-pca.pdf')
+pdf('results/kidney_expression-pca.pdf')
 plot(prcomp(as.matrix(gene)),type='l',main='Kidney Expression PCA')
 dev.off()
 #write.table(t(prcomp(as.matrix(gene))$rotation)[1:5,],'kidney_expression.out.filter.cov',row.names=T,col.names=T,sep="\t",quote=F)
@@ -35,7 +35,7 @@ CNV_kid<-rbind(t(prcomp(as.matrix(gene))$rotation)[1,],t(prcomp(as.matrix(snps))
 write.table(CNV_kid,'data/CNV_kid_cov',row.names=T,col.names=T,quote=F,sep="\t")
 
 gene$LoadFile('data/liver_expression.out')
-pdf('liver_expression-pca.pdf')
+pdf('results/liver_expression-pca.pdf')
 plot(prcomp(as.matrix(gene)),type='l','Liver Expression PCA')
 dev.off()
 #write.table(t(prcomp(as.matrix(gene))$rotation)[1:5,],'liver_expression.out.filter.cov',row.names=T,col.names=T,sep="\t",quote=F) 
@@ -47,12 +47,12 @@ write.table(CNV_liv,'data/CNV_liv_cov',row.names=T,col.names=T,quote=F,sep="\t")
 
 ###CNV-miRNA
 snps$LoadFile('data/CNV_matrix.newID.miR_expr_out.filter')
-pdf('CNV-miRNA_pca.pdf')
+pdf('results/CNV-miRNA_pca.pdf')
 plot(prcomp(as.matrix(snps)),type='l','CNV-miRNA PCA')
 dev.off()
 
 gene$LoadFile('data/liver_miRNA_expression.miR_expr_out.newID')
-pdf('liv-miR_pca.pdf')
+pdf('results/liv-miR_pca.pdf')
 plot(prcomp(as.matrix(gene)),type='l','Liver miRNA Expression PCA')
 dev.off()
 
@@ -61,7 +61,7 @@ CNV_liv_miR<-rbind(t(prcomp(as.matrix(gene))$rotation)[1,],t(prcomp(as.matrix(sn
 write.table(CNV_liv_miR,'data/CNV_liv-miR_cov',row.names=T,col.names=T,quote=F,sep="\t")
 
 gene$LoadFile('data/kidney_miRNA_expression.miR_expr_out.newID')
-pdf('kid-miR_pca.pdf')
+pdf('results/kid-miR_pca.pdf')
 plot(prcomp(as.matrix(gene)),type='l',main='Kidney miRNA Expression PCA')
 dev.off()
 
