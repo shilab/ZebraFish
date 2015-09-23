@@ -4,13 +4,13 @@ me1<-mxeqtl('data/CNV_matrix.newID.out.filter','data/CNV_position','data/kidney_
 
 me2<-mxeqtl('data/CNV_matrix.newID.out.filter','data/CNV_position','data/liver_expression.out','data/gene_position','results/CNV_liver_CISResults',0.05,covariates='data/CNV_liv_cov',qq='results/liver_CNV-qq.pdf')
 
-me3<-mxeqtl('data/CNV_matrix.newID.miR_expr_out.filter','data/CNV_position','data/kidney_miRNA_expression.miR_expr_out.newID','miRNA_positions.gene','results/CNV-kidney-miR-CISResults',0.05,covariates='data/CNV_kid-miR_cov',qq='results/CNV_kid-miR-qq.pdf')
+me3<-mxeqtl('data/CNV_matrix.newID.miR_expr_out.filter','data/CNV_position','data/kidney_miRNA_expression.miR_expr_out.newID','data/miRNA_positions.gene','results/CNV-kidney-miR-CISResults',0.05,covariates='data/CNV_kid-miR_cov',qq='results/CNV_kid-miR-qq.pdf')
 
-me4<-mxeqtl('data/CNV_matrix.newID.miR_expr_out.filter','data/CNV_position','data/liver_miRNA_expression.miR_expr_out.newID','miRNA_positions.gene','results/CNV-liver-miR-CISResults',0.05,covariates='data/CNV_liv-miR_cov',qq='results/CNV_liv-miR-qq.pdf')
+me4<-mxeqtl('data/CNV_matrix.newID.miR_expr_out.filter','data/CNV_position','data/liver_miRNA_expression.miR_expr_out.newID','data/miRNA_positions.gene','results/CNV-liver-miR-CISResults',0.05,covariates='data/CNV_liv-miR_cov',qq='results/CNV_liv-miR-qq.pdf')
 
-me5<-mxeqtl('data/kidney_miRNA_expression.miR_out.newID','miRNA_positions.snps','data/kidney_expression.miR_out','data/gene_position','results/kidney-miR-expr-CISResults',0.05,covariates='data/kid-miR-expr_cov',qq='results/kid-miR-expr-qq.pdf')
+me5<-mxeqtl('data/kidney_miRNA_expression.miR_out.newID','data/miRNA_positions.snps','data/kidney_expression.miR_out','data/gene_position','results/kidney-miR-expr-CISResults',0.05,covariates='data/kid-miR-expr_cov',qq='results/kid-miR-expr-qq.pdf')
 
-me6<-mxeqtl('data/liver_miRNA_expression.miR_out.newID','miRNA_positions.snps','data/liver_expression.miR_out','data/gene_position','results/liver-miR-expr-CISResults',0.05,covariates='data/liv-miR-expr_cov',qq='results/liv-miR-expr-qq.pdf')
+me6<-mxeqtl('data/liver_miRNA_expression.miR_out.newID','data/miRNA_positions.snps','data/liver_expression.miR_out','data/gene_position','results/liver-miR-expr-CISResults',0.05,covariates='data/liv-miR-expr_cov',qq='results/liv-miR-expr-qq.pdf')
 
 length(which(me1$cis$eqtls$FDR<0.2))
 length(which(me1$cis$eqtls$FDR<0.1))

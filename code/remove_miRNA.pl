@@ -5,7 +5,7 @@ use warnings;
 my %newIDs;
 my $output;
 
-my $filename = "miRNA_positions.snps";
+my $filename = "data/miRNA_positions.snps";
 open(FILE,$filename) || die "Can't open file $filename";
 while (<FILE>)
 {

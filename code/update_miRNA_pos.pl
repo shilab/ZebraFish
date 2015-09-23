@@ -20,10 +20,10 @@ while(<FILE>)
 }
 close FILE;
 
-open FILE, ">". "miRNA_positions.snps" or die $!;
+open FILE, ">". "data/miRNA_positions.snps" or die $!;
 print FILE $snp_output;
 close FILE;
 
-open FILE, ">" . "miRNA_positions.gene" or die $!;
+open FILE, ">" . "data/miRNA_positions.gene" or die $!;
 print FILE $gene_output;
 close FILE;
