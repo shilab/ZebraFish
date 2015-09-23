@@ -54,8 +54,6 @@ CorrScatterPlot <- function (mEQTL,threshold,expr,genot,visual=TRUE,cis=TRUE,fil
       #Prepare the matrix
       geno <- as.numeric(genotype[[i]])
       pheno <- as.numeric(phenotype[[i]])
-	  cat(max(geno),'\n')
-	  cat(max(pheno),'\n')
       #      geno
       #      pdf("scatterplot.pdf")
 #      values <- list();
