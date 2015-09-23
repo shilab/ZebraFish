@@ -1,4 +1,4 @@
-source('expression_sd_filter.R')
+source('code/expression_sd_filter.R')
 expr<-expression_filter('kidney_expression.out', 0.05)
 expr<-expression_filter('liver_expression.out', 0.05)
 expr<-expression_filter('liver_expression.miR_out', 0.05)

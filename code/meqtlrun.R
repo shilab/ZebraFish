@@ -1,5 +1,5 @@
 library(MatrixEQTL)
-source('mxeqtl.R')
+source('code/mxeqtl.R')
 me1<-mxeqtl('CNV_matrix.newID.out.filter','CNV_position','kidney_expression.out','gene_position','CNV_kidney_CISResults',0.05,covariates='CNV_kid_cov',qq='kidney_CNV-qq.pdf')
 
 me2<-mxeqtl('CNV_matrix.newID.out.filter','CNV_position','liver_expression.out','gene_position','CNV_liver_CISResults',0.05,covariates='CNV_liv_cov',qq='liver_CNV-qq.pdf')
@@ -31,7 +31,7 @@ length(which(me6$cis$eqtls$FDR<0.2))
 length(which(me6$cis$eqtls$FDR<0.1))
 
 #Plots FDR<0.2
-source('CorrBoxPlotZeb.R')
+source('code/CorrBoxPlotZeb.R')
 genot<-read.table('CNV_matrix.newID.out.filter', header = T, stringsAsFactors=F,row.names=1)
 expr<-read.table('kidney_expression.out', header = TRUE, stringsAsFactors = FALSE,row.names=1)
 CorrBoxPlot(me1,0.2,expr,genot,visual=T,pdf_file='CNV-kidney_expression-boxplots-FDR02.pdf')
@@ -45,7 +45,7 @@ genot<-read.table('CNV_matrix.newID.miR_expr_out.filter', header = T, stringsAsF
 expr<-read.table('kidney_miRNA_expression.miR_expr_out.newID', header = TRUE, stringsAsFactors = FALSE,row.names=1)
 CorrBoxPlot(me4,0.2,expr,genot,visual=T,pdf_file='CNV-kidney_miRNA_expression-boxplots-FDR02.pdf')
 #Scatter Plots
-source('CorrScatterPlot.R')
+source('code/CorrScatterPlot.R')
 genot<-read.table('kidney_miRNA_expression.miR_out.newID', header = T, stringsAsFactors=F,row.names=1)
 expr<-read.table('kidney_expression.miR_out', header = TRUE, stringsAsFactors = FALSE,row.names=1)
 CorrScatterPlot(me5,0.2,expr,genot,T,T,'kidney_expression-miRNA_scatterplot-FDR02.pdf')
@@ -54,7 +54,7 @@ expr<-read.table('liver_expression.miR_out', header = TRUE, stringsAsFactors = F
 CorrScatterPlot(me5,0.2,expr,genot,T,T,'liver_expression-miRNA_scatterplot-FDR02.pdf')
 
 #Plots FDR<0.1 
-source('CorrBoxPlotZeb.R')
+source('code/CorrBoxPlotZeb.R')
 genot<-read.table('CNV_matrix.newID.out.filter', header = T, stringsAsFactors=F,row.names=1)
 expr<-read.table('kidney_expression.out', header = TRUE, stringsAsFactors = FALSE,row.names=1)
 CorrBoxPlot(me1,0.1,expr,genot,visual=T,pdf_file='CNV-kidney_expression-boxplots-FDR01.pdf')
@@ -68,7 +68,7 @@ genot<-read.table('CNV_matrix.newID.miR_expr_out.filter', header = T, stringsAsF
 expr<-read.table('kidney_miRNA_expression.miR_expr_out.newID', header = TRUE, stringsAsFactors = FALSE,row.names=1)
 CorrBoxPlot(me4,0.1,expr,genot,visual=T,pdf_file='CNV-kidney_miRNA_expression-boxplots-FDR01.pdf')
 #Scatter Plots
-source('CorrScatterPlot.R')
+source('code/CorrScatterPlot.R')
 genot<-read.table('kidney_miRNA_expression.miR_out.newID', header = T, stringsAsFactors=F,row.names=1)
 expr<-read.table('kidney_expression.miR_out', header = TRUE, stringsAsFactors = FALSE,row.names=1)
 CorrScatterPlot(me5,0.1,expr,genot,T,T,'kidney_expression-miRNA_scatterplot-FDR01.pdf')
