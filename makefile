@@ -11,9 +11,9 @@ CISresults: CNV_matrix.newID.out.filter CNV_position liver_expression.out.filter
 covariates: CNV_matrix.newID.out.filter CNV_position liver_expression.out.filter gene_position miR_expression miR_CNV
 	R --no-save < pca_and_covariates.R
 
-miR_expression: liver_miRNA_expression.miR_out kidney_miRNA_expression.miR_out liver_miRNA_pos.snps kidney_miRNA_pos.snps  liver_expression.miR_out.filter kidney_expression.miR_out.filter liver_miRNA_expression.miR_expr_out.filter kidney_miRNA_expression.miR_expr_out.filter
+miR_expression: liver_miRNA_expression.miR_out.newID kidney_miRNA_expression.miR_out.newID miRNA_positions.snps liver_expression.miR_out.filter kidney_expression.miR_out.filter liver_miRNA_expression.miR_expr_out.filter kidney_miRNA_expression.miR_expr_out.filter
 
-miR_CNV: CNV_matrix.newID.miR_expr_out.filter CNV_position liver_miRNA_expression.miR_expr_out liver_miRNA_pos.gene liver_miRNA_pos.gene kidney_miRNA_pos.gene
+miR_CNV: CNV_matrix.newID.miR_expr_out.filter CNV_position liver_miRNA_expression.miR_expr_out.newID kidney_miRNA_expression.miR_expr_out.newID miRNA_positions.gene
 
 gene_position: ZebGene-1_1-st-v1.r4.f38.design.transcript.design-time.pre-release.20110822.csv 
 	perl ZebGene.pl
@@ -62,12 +62,19 @@ liver_miRNA_expression.miR_expr_out.filter: kidney_miRNA_expression.miR_expr_out
 
 kidney_expression.miR_out: kidney_expression kidney_miRNA_expression liver_miRNA_expression
 	perl overlap_miRNA.pl kidney_expression kidney_miRNA_expression
+
 liver_expression.miR_out: liver_expression liver_miRNA_expression kidney_miRNA_expression
 	perl overlap_miRNA.pl liver_expression liver_miRNA_expression
 
 liver_miRNA_expression.miR_out: liver_expression.miR_out 
 
 kidney_miRNA_expression.miR_out: kidney_expression.miR_out
+
+liver_miRNA_expression.miR_out.newID: liver_miRNA_expression.miR_out
+	perl remove_miRNA.pl liver_miRNA_expression.miR_out
+
+kidney_miRNA_expression.miR_out.newID: kidney_miRNA_expression.miR_out
+	perl remove_miRNA.pl kidney_miRNA_expression.miR_out
 
 CNV_matrix.newID.miR_expr_out.filter: CNV_matrix.newID.out.filter 
 
@@ -81,15 +88,33 @@ kidney_miRNA_expression.miR_expr_out: CNV_matrix.newID.miR_expr_out liver_miRNA_
 
 liver_miRNA_expression.miR_expr_out: kidney_miRNA_expression.miR_expr_out
 
-kidney_miRNA_pos.snps: kidney_miRNA_expression 
-	perl miRNA_pos.pl kidney_miRNA_expression kidney_miRNA_pos
+liver_miRNA_expression.miR_expr_out.newID: liver_miRNA_expression.miR_expr_out
+	perl remove_miRNA.pl liver_miRNA_expression.miR_expr_out
 
-kidney_miRNA_pos.gene: kidney_miRNA_pos.snps
 
-liver_miRNA_pos.snps: liver_miRNA_expression
-	perl miRNA_pos.pl liver_miRNA_expression liver_miRNA_pos
+kidney_miRNA_expression.miR_expr_out.newID: kidney_miRNA_expression.miR_expr_out
+	perl remove_miRNA.pl kidney_miRNA_expression.miR_expr_out
 
-liver_miRNA_pos.gene: liver_miRNA_pos.snps
+data/old_miRNA_positions: kidney_miRNA_expression
+	perl miRNA_pos.pl kidney_miRNA_expression data/old_miRNA_positions
+	rm data/old_miRNA_positions.snps
+	awk '{print "chr"$2"\t"$3"\t"$4"\t"$1}' data/old_miRNA_positions.gene | tail -n +2 > data/old_miRNA_positions
+	rm data/old_miRNA_positions.gene
+
+miRNA_positions.snps: data/new_miRNA_positions
+	perl update_miRNA_pos.pl
+
+miRNA_positions.gene: miRNA_positions.snps
+
+#kidney_miRNA_pos.snps: kidney_miRNA_expression 
+#	perl miRNA_pos.pl kidney_miRNA_expression kidney_miRNA_pos
+
+#kidney_miRNA_pos.gene: kidney_miRNA_pos.snps
+
+#liver_miRNA_pos.snps: liver_miRNA_expression
+#	perl miRNA_pos.pl liver_miRNA_expression liver_miRNA_pos
+
+#liver_miRNA_pos.gene: liver_miRNA_pos.snps
 
 kidney_miRNA_expression: 
 	perl miRNA_parser.pl All-kidney-tissue-miRNA-result.csv kidney_miRNA_expression
