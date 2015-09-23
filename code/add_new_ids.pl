@@ -76,6 +76,6 @@ foreach(@old_IDs)
 	}
 }
 
-open FILE,">". $CNV_file . ".newID"  or die $!;
+open FILE,">" . $CNV_file . ".newID"  or die $!;
 print FILE $output;
 close FILE;

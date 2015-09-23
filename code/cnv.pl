@@ -110,6 +110,6 @@ sub parse_keys
 	}
 }
 
-open FILE, ">". "CNV_matrix" or die $!;
+open FILE, ">". "data/CNV_matrix" or die $!;
 print FILE $output;
 close FILE;

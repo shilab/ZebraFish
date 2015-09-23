@@ -18,7 +18,7 @@ Mode <- function(x)
   ux[which.max(tabulate(match(x, ux)))]
 }
 
-snps$LoadFile('CNV_matrix.newID.out')
+snps$LoadFile('data/CNV_matrix.newID.out')
 maf.list = vector('list', length(snps))
 for(sl in 1:length(snps))
 {
@@ -28,9 +28,9 @@ for(sl in 1:length(snps))
 maf = unlist(maf.list)
 sum(maf>=MAF)
 snps$RowReorder(maf>MAF);
-write.table(as.matrix(snps),'CNV_matrix.newID.out.filter',row.names=T,col.names=T,sep="\t",quote=F)
+write.table(as.matrix(snps),'data/CNV_matrix.newID.out.filter',row.names=T,col.names=T,sep="\t",quote=F)
 
-snps$LoadFile('CNV_matrix.newID.miR_expr_out')
+snps$LoadFile('data/CNV_matrix.newID.miR_expr_out')
 maf.list = vector('list', length(snps))
 for(sl in 1:length(snps))
 {
@@ -40,4 +40,4 @@ for(sl in 1:length(snps))
 maf = unlist(maf.list)
 sum(maf>=MAF)
 snps$RowReorder(maf>MAF);
-write.table(as.matrix(snps),'CNV_matrix.newID.miR_expr_out.filter',row.names=T,col.names=T,sep="\t",quote=F)
+write.table(as.matrix(snps),'data/CNV_matrix.newID.miR_expr_out.filter',row.names=T,col.names=T,sep="\t",quote=F)

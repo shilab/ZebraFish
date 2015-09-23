@@ -9,9 +9,9 @@ my @cnv_index;
 my @kid_index;
 my @liver_index;
 
-my $kid_file = "kidney_expression";
-my $liver_file = "liver_expression";
-my $cnv_file = "CNV_matrix.newID";
+my $kid_file = "data/kidney_expression";
+my $liver_file = "data/liver_expression";
+my $cnv_file = "data/CNV_matrix.newID";
 
 my $kid_output;
 my $liver_output;
@@ -111,14 +111,14 @@ while(<FILE>)
 close FILE;
 
 
-open FILE, ">". "kidney_expression.out" or die $!;
+open FILE, ">". "data/kidney_expression.out" or die $!;
 print FILE $kid_output;
 close FILE;
 
-open FILE, ">". "liver_expression.out" or die $!;
+open FILE, ">". "data/liver_expression.out" or die $!;
 print FILE $liver_output;
 close FILE;
 
-open FILE, ">". "CNV_matrix.newID.out" or die $!;
+open FILE, ">". "data/CNV_matrix.newID.out" or die $!;
 print FILE $cnv_output;
 close FILE;

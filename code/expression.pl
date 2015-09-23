@@ -55,10 +55,10 @@ $id[0] = "id";
 $kid_output = join("\t", @id[@kidney]) ."\n$kid_output";
 $liver_output = join("\t", @id[@liver]) ."\n$liver_output";
 
-open FILE, ">". "kidney_expression" or die $!;
+open FILE, ">". "data/kidney_expression" or die $!;
 print FILE $kid_output;
 close FILE;
 
-open FILE, ">". "liver_expression" or die $!;
+open FILE, ">". "data/liver_expression" or die $!;
 print FILE $liver_output;
 close FILE;

@@ -12,7 +12,7 @@ while (<FILE>)
 }
 
 #Print output to file
-open FILE,">"."gene_position" or die $!;
+open FILE,">"."data/gene_position" or die $!;
 print FILE $output;
 close FILE;
 

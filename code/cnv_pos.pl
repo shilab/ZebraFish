@@ -4,7 +4,7 @@ use warnings;
 
 #Initialize output with the header
 my $output = "snpid\tchr\tpos\n";
-my $filename = "CNV_matrix.newID";
+my $filename = "data/CNV_matrix.newID";
 open(FILE, $filename) || die "Can't open file $filename";
 while(<FILE>)
 {
@@ -58,6 +58,6 @@ sub parse
 	}
 }
 
-open FILE, ">". "CNV_position" or die $!;
+open FILE, ">". "data/CNV_position" or die $!;
 print FILE $output;
 close FILE;
