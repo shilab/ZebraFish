@@ -70,10 +70,10 @@ liver_miRNA_expression.miR_out: liver_expression.miR_out
 
 kidney_miRNA_expression.miR_out: kidney_expression.miR_out
 
-liver_miRNA_expression.miR_out.newID: liver_miRNA_expression.miR_out
+liver_miRNA_expression.miR_out.newID: liver_miRNA_expression.miR_out miRNA_positions.snps
 	perl remove_miRNA.pl liver_miRNA_expression.miR_out
 
-kidney_miRNA_expression.miR_out.newID: kidney_miRNA_expression.miR_out
+kidney_miRNA_expression.miR_out.newID: kidney_miRNA_expression.miR_out miRNA_positions.snps
 	perl remove_miRNA.pl kidney_miRNA_expression.miR_out
 
 CNV_matrix.newID.miR_expr_out.filter: CNV_matrix.newID.out.filter 
@@ -88,20 +88,20 @@ kidney_miRNA_expression.miR_expr_out: CNV_matrix.newID.miR_expr_out liver_miRNA_
 
 liver_miRNA_expression.miR_expr_out: kidney_miRNA_expression.miR_expr_out
 
-liver_miRNA_expression.miR_expr_out.newID: liver_miRNA_expression.miR_expr_out
+liver_miRNA_expression.miR_expr_out.newID: liver_miRNA_expression.miR_expr_out miRNA_positions.snps
 	perl remove_miRNA.pl liver_miRNA_expression.miR_expr_out
 
 
-kidney_miRNA_expression.miR_expr_out.newID: kidney_miRNA_expression.miR_expr_out
+kidney_miRNA_expression.miR_expr_out.newID: kidney_miRNA_expression.miR_expr_out miRNA_positions.snps
 	perl remove_miRNA.pl kidney_miRNA_expression.miR_expr_out
 
-data/old_miRNA_positions: kidney_miRNA_expression
+data/old_miRNA_positions: kidney_miRNA_expression miRNA_positions.snps
 	perl miRNA_pos.pl kidney_miRNA_expression data/old_miRNA_positions
 	rm data/old_miRNA_positions.snps
 	awk '{print "chr"$2"\t"$3"\t"$4"\t"$1}' data/old_miRNA_positions.gene | tail -n +2 > data/old_miRNA_positions
 	rm data/old_miRNA_positions.gene
 
-miRNA_positions.snps: data/new_miRNA_positions
+miRNA_positions.snps: 
 	perl update_miRNA_pos.pl
 
 miRNA_positions.gene: miRNA_positions.snps
