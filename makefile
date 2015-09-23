@@ -24,9 +24,6 @@ CNV_position: CNV_matrix.newID
 CNV_matrix.newID.out.filter: CNV_matrix.newID.out CNV_matrix.newID.miR_expr_out
 	R --no-save < code/maf_filter.R
 
-#CNV_matrix.newID.out.filter: CNV_matrix.newID.out
-#	perl filter.pl CNV_matrix.newID.out 0.05
-
 CNV_matrix.newID.out: CNV_matrix.newID liver_expression kidney_expression
 	perl code/overlap.pl
 
@@ -78,9 +75,6 @@ kidney_miRNA_expression.miR_out.newID: kidney_miRNA_expression.miR_out miRNA_pos
 
 CNV_matrix.newID.miR_expr_out.filter: CNV_matrix.newID.out.filter 
 
-#CNV_matrix.newID.miR_expr_out.filter: CNV_matrix.newID.miR_expr_out
-#	perl filter.pl CNV_matrix.newID.miR_expr_out 0.05
-
 CNV_matrix.newID.miR_expr_out: CNV_matrix.newID kidney_miRNA_expression liver_miRNA_expression
 	perl code/miRNA_overlap.pl
 
@@ -90,7 +84,6 @@ liver_miRNA_expression.miR_expr_out: kidney_miRNA_expression.miR_expr_out
 
 liver_miRNA_expression.miR_expr_out.newID: liver_miRNA_expression.miR_expr_out miRNA_positions.snps
 	perl code/remove_miRNA.pl liver_miRNA_expression.miR_expr_out
-
 
 kidney_miRNA_expression.miR_expr_out.newID: kidney_miRNA_expression.miR_expr_out miRNA_positions.snps
 	perl code/remove_miRNA.pl kidney_miRNA_expression.miR_expr_out
@@ -106,17 +99,8 @@ miRNA_positions.snps:
 
 miRNA_positions.gene: miRNA_positions.snps
 
-#kidney_miRNA_pos.snps: kidney_miRNA_expression 
-#	perl miRNA_pos.pl kidney_miRNA_expression kidney_miRNA_pos
-
-#kidney_miRNA_pos.gene: kidney_miRNA_pos.snps
-
-#liver_miRNA_pos.snps: liver_miRNA_expression
-#	perl miRNA_pos.pl liver_miRNA_expression liver_miRNA_pos
-
-#liver_miRNA_pos.gene: liver_miRNA_pos.snps
-
 kidney_miRNA_expression: 
 	perl code/miRNA_parser.pl All-kidney-tissue-miRNA-result.csv kidney_miRNA_expression
+
 liver_miRNA_expression:
 	perl code/miRNA_parser.pl All-liver-tissue-miRNA-result.csv liver_miRNA_expression
