@@ -142,8 +142,6 @@ function(snp_file,snp_location,expr_file,expr_location,cis_output_file,
 		cat('SNPs after filtering:',nrow(snps),'\n')
 	}
 
-	snps$SaveFile("meQTL_filtered_input")
-
 	gene=fileOptions$gene;
 	gene$LoadFile(expression_file_name);
 
