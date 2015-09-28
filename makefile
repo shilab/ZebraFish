@@ -1,4 +1,4 @@
-analysis: setup CISresults
+analysis: setup FDR01
 
 clean:
 	rm data/liv* data/kid* data/CNV* data/gene_positions results/*
@@ -7,6 +7,15 @@ setup:
 	mkdir -p results
 
 .SECONDARY:
+
+FDR01: CISresults
+	awk '$$6<0.1 {print}' results/CNV_kidney_CISResults > results/CNV_kidney_CISResults.FDR01
+	awk '$$6<0.1 {print}' results/CNV-kidney-miR-CISResults> results/CNV-kidney-miR-CISResults.FDR01
+	awk '$$6<0.1 {print}' results/CNV_liver_CISResults> results/CNV_liver_CISResults.FDR01
+	awk '$$6<0.1 {print}' results/CNV-liver-miR-CISResults> results/CNV-liver-miR-CISResults.FDR01
+	awk '$$6<0.1 {print}' results/kidney-miR-expr-CISResults> results/kidney-miR-expr-CISResults.FDR01
+	awk '$$6<0.1 {print}' results/liver-miR-expr-CISResults> results/liver-miR-expr-CISResults.FDR01
+
 
 CISresults: data/CNV_matrix.newID.out.filter data/CNV_position data/liver_expression.out.filter data/gene_position miR_expression miR_CNV covariates
 	R --no-save < code/meqtlrun.R
