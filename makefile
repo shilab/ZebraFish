@@ -8,7 +8,9 @@ setup:
 
 .SECONDARY:
 
-FDR01: CISresults
+FDR01: results/CNV_kidney_CISResults.FDR01 results/CNV-kidney-miR-CISResults.FDR01 results/CNV_liver_CISResults.FDR01 results/CNV-liver-miR-CISResults.FDR01 results/kidney-miR-expr-CISResults.FDR01 results/liver-miR-expr-CISResults.FDR01
+
+results/CNV_kidney_CISResults.FDR01: results/CNV_kidney_CISResults
 	awk '$$6<0.1 {print}' results/CNV_kidney_CISResults > results/CNV_kidney_CISResults.FDR01
 	awk '$$6<0.1 {print}' results/CNV-kidney-miR-CISResults> results/CNV-kidney-miR-CISResults.FDR01
 	awk '$$6<0.1 {print}' results/CNV_liver_CISResults> results/CNV_liver_CISResults.FDR01
@@ -16,9 +18,20 @@ FDR01: CISresults
 	awk '$$6<0.1 {print}' results/kidney-miR-expr-CISResults> results/kidney-miR-expr-CISResults.FDR01
 	awk '$$6<0.1 {print}' results/liver-miR-expr-CISResults> results/liver-miR-expr-CISResults.FDR01
 
+results/CNV-kidney-miR-CISResults.FDR01: results/CNV_kidney_CISResults.FDR01
 
-CISresults: data/CNV_matrix.newID.out.filter data/CNV_position data/liver_expression.out.filter data/gene_position miR_expression miR_CNV covariates
+results/CNV_liver_CISResults.FDR01: results/CNV-kidney-miR-CISResults.FDR01
+
+results/CNV-liver-miR-CISResults.FDR01: results/CNV_liver_CISResults.FDR01
+
+results/kidney-miR-expr-CISResults.FDR01: results/CNV-liver-miR-CISResults.FDR01
+
+results/liver-miR-expr-CISResults.FDR01: results/kidney-miR-expr-CISResults.FDR01
+
+CISResults: data/CNV_matrix.newID.out.filter data/CNV_position data/liver_expression.out.filter data/gene_position miR_expression miR_CNV covariates
 	R --no-save < code/meqtlrun.R
+
+results/CNV_kidney_CISResults results/CNV-kidney-miR-CISResults results/CNV_liver_CISResults results/CNV-liver-miR-CISResults results/kidney-miR-expr-CISResults results/liver-miR-expr-CISResults: CISResults
 
 covariates: data/CNV_matrix.newID.out.filter data/CNV_position data/liver_expression.out.filter data/gene_position miR_expression miR_CNV
 	R --no-save < code/pca_and_covariates.R
