@@ -59,5 +59,7 @@ CorrScatterPlot <- function (mEQTL,threshold,expr,genot,visual=TRUE,cis=TRUE,fil
     }
         dev.off()
   }
+  corr_file = paste("results/",substr(basename(filename), 1, nchar(basename(filename)) - 4),".corr",sep="");
+  write.table(corr, corr_file, row.names=F,col.names=F);
   return(corr)
 }

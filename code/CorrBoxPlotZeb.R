@@ -58,5 +58,7 @@ CorrBoxPlot <- function (mEQTL,threshold,expr,genot,visual=FALSE,pdf_file="",cis
     }
 	dev.off()
   }
+  corr_file = paste("results/",substr(basename(pdf_file), 1, nchar(basename(pdf_file)) - 4),".corr",sep="");
+  write.table(corr, corr_file, row.names=F,col.names=F);
   return(corr)
 }

@@ -1,6 +1,6 @@
 SHELL=/bin/bash
 
-analysis: setup FDR01 network
+analysis: setup FDR01 network CORR
 
 clean:
 	rm data/liv* data/kid* data/CNV* data/gene_position results/*
@@ -18,15 +18,35 @@ results/kidney_network: results/CNV_kidney_CISResults.FDR01 results/CNV-kidney-m
 results/liver_network: results/CNV_liver_CISResults.FDR01 results/CNV-liver-miR-CISResults.FDR01 results/liver-miR-expr-CISResults.FDR01
 	cat <(awk '{print $$1"\tCNV-mRNA\t"$$2}' results/CNV_liver_CISResults.FDR01) <(awk '{print $$1"\tCNV-miRNA\t"$$2}' results/CNV-liver-miR-CISResults.FDR01) <(awk '{print $$1"\tmiRNA-mRNA\t"$$2}' results/liver-miR-expr-CISResults.FDR01) > results/liver_network
 
+CORR: results/CNV_kidney_CISResults.FDR01.corr results/CNV-kidney-miR-CISResults.FDR01.corr results/CNV_liver_CISResults.FDR01.corr results/CNV-liver-miR-CISResults.FDR01.corr results/kidney-miR-expr-CISResults.FDR01.corr results/liver-miR-expr-CISResults.FDR01.corr
+
+results/CNV_kidney_CISResults.FDR01.corr: results/CNV_kidney_CISResults.FDR01
+	paste <(cat results/CNV_kidney_CISResults.FDR01) <(cat <(echo "R^2") <(cat results/CNV-kidney_expression-boxplots-FDR01.corr)) > results/CNV_kidney_CISResults.FDR01.corr
+
+results/CNV-kidney-miR-CISResults.FDR01.corr: results/CNV-kidney-miR-CISResults.FDR01
+	paste <(cat results/CNV-kidney-miR-CISResults.FDR01) <(cat <(echo "R^2") <(cat results/CNV-kidney_miRNA_expression-boxplots-FDR01.corr))  > results/CNV-kidney-miR-CISResults.FDR01.corr
+
+results/CNV_liver_CISResults.FDR01.corr: results/CNV_liver_CISResults.FDR01
+	paste <(cat results/CNV_liver_CISResults.FDR01) <(cat <(echo "R^2") <(cat results/CNV-liver_expression-boxplots-FDR01.corr)) > results/CNV_liver_CISResults.FDR01.corr
+
+results/CNV-liver-miR-CISResults.FDR01.corr: results/CNV-liver-miR-CISResults.FDR01
+	paste <(cat results/CNV-liver-miR-CISResults.FDR01) <(cat <(echo "R^2") <(cat results/CNV-liver_miRNA_expression-boxplots-FDR01.corr)) > results/CNV-liver-miR-CISResults.FDR01.corr
+
+results/kidney-miR-expr-CISResults.FDR01.corr: results/kidney-miR-expr-CISResults.FDR01
+	paste <(cat results/kidney-miR-expr-CISResults.FDR01) <(cat <(echo "R^2") <(cat results/kidney_expression-miRNA_scatterplot-FDR01.corr)) > results/kidney-miR-expr-CISResults.FDR01.corr
+
+results/liver-miR-expr-CISResults.FDR01.corr: results/liver-miR-expr-CISResults.FDR01
+	paste <(cat results/liver-miR-expr-CISResults.FDR01) <(cat <(echo "R^2") <(cat results/liver_expression-miRNA_scatterplot-FDR01.corr)) > results/liver-miR-expr-CISResults.FDR01.corr
+
 FDR01: results/CNV_kidney_CISResults.FDR01 results/CNV-kidney-miR-CISResults.FDR01 results/CNV_liver_CISResults.FDR01 results/CNV-liver-miR-CISResults.FDR01 results/kidney-miR-expr-CISResults.FDR01 results/liver-miR-expr-CISResults.FDR01
 
 results/CNV_kidney_CISResults.FDR01: results/CNV_kidney_CISResults
-	awk '$$6<0.1 {print}' results/CNV_kidney_CISResults > results/CNV_kidney_CISResults.FDR01
-	awk '$$6<0.1 {print}' results/CNV-kidney-miR-CISResults> results/CNV-kidney-miR-CISResults.FDR01
-	awk '$$6<0.1 {print}' results/CNV_liver_CISResults> results/CNV_liver_CISResults.FDR01
-	awk '$$6<0.1 {print}' results/CNV-liver-miR-CISResults> results/CNV-liver-miR-CISResults.FDR01
-	awk '$$6<0.1 {print}' results/kidney-miR-expr-CISResults> results/kidney-miR-expr-CISResults.FDR01
-	awk '$$6<0.1 {print}' results/liver-miR-expr-CISResults> results/liver-miR-expr-CISResults.FDR01
+	cat <(head -n 1 results/CNV_kidney_CISResults) <(awk '$$6<0.1 {print}' results/CNV_kidney_CISResults) > results/CNV_kidney_CISResults.FDR01
+	cat <(head -n 1 results/CNV_kidney_CISResults) <(awk '$$6<0.1 {print}' results/CNV-kidney-miR-CISResults) > results/CNV-kidney-miR-CISResults.FDR01
+	cat <(head -n 1 results/CNV_kidney_CISResults) <(awk '$$6<0.1 {print}' results/CNV_liver_CISResults) > results/CNV_liver_CISResults.FDR01
+	cat <(head -n 1 results/CNV_kidney_CISResults) <(awk '$$6<0.1 {print}' results/CNV-liver-miR-CISResults) > results/CNV-liver-miR-CISResults.FDR01
+	cat <(head -n 1 results/CNV_kidney_CISResults) <(awk '$$6<0.1 {print}' results/kidney-miR-expr-CISResults) > results/kidney-miR-expr-CISResults.FDR01
+	cat <(head -n 1 results/CNV_kidney_CISResults) <(awk '$$6<0.1 {print}' results/liver-miR-expr-CISResults) > results/liver-miR-expr-CISResults.FDR01
 
 results/CNV-kidney-miR-CISResults.FDR01: results/CNV_kidney_CISResults.FDR01
 
