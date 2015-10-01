@@ -3,7 +3,7 @@ SHELL=/bin/bash
 analysis: setup FDR01 network
 
 clean:
-	rm data/liv* data/kid* data/CNV* data/gene_positions results/*
+	rm data/liv* data/kid* data/CNV* data/gene_position results/*
 
 setup:
 	mkdir -p results
