@@ -63,7 +63,9 @@ CISResults: data/CNV_matrix.newID.out.filter data/CNV_position data/liver_expres
 
 results/CNV_kidney_CISResults results/CNV-kidney-miR-CISResults results/CNV_liver_CISResults results/CNV-liver-miR-CISResults results/kidney-miR-expr-CISResults results/liver-miR-expr-CISResults: CISResults
 
-covariates: data/CNV_matrix.newID.out.filter data/CNV_position data/liver_expression.out.filter data/gene_position miR_expression miR_CNV
+covariates: data/CNV_kid_cov data/CNV_kid-miR_cov data/CNV_liv_cov data/CNV_liv-miR_cov data/kid-miR-expr_cov data/liv-miR-expr_cov
+
+data/CNV_kid_cov data/CNV_kid-miR_cov data/CNV_liv_cov data/CNV_liv-miR_cov data/kid-miR-expr_cov data/liv-miR-expr_cov: data/CNV_matrix.newID.out.filter data/CNV_position data/liver_expression.out.filter data/gene_position miR_expression miR_CNV
 	R --no-save < code/pca_and_covariates.R
 
 miR_expression: data/liver_miRNA_expression.miR_out.newID data/kidney_miRNA_expression.miR_out.newID data/miRNA_positions.snps data/liver_expression.miR_out.filter data/kidney_expression.miR_out.filter data/liver_miRNA_expression.miR_expr_out.filter data/kidney_miRNA_expression.miR_expr_out.filter
