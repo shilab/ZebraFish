@@ -35,22 +35,22 @@ results/liver_network: results/CNV_liver_CISResults.FDR01 results/CNV-liver-miR-
 CORR: results/CNV_kidney_CISResults.FDR01.corr results/CNV-kidney-miR-CISResults.FDR01.corr results/CNV_liver_CISResults.FDR01.corr results/CNV-liver-miR-CISResults.FDR01.corr results/kidney-miR-expr-CISResults.FDR01.corr results/liver-miR-expr-CISResults.FDR01.corr
 
 results/CNV_kidney_CISResults.FDR01.corr: results/CNV_kidney_CISResults.FDR01
-	paste <(cat results/CNV_kidney_CISResults.FDR01) <(cat <(echo "R^2") <(cat results/CNV-kidney_expression-boxplots-FDR01.corr)) > results/CNV_kidney_CISResults.FDR01.corr
+	paste <(cat results/CNV_kidney_CISResults.FDR01) <(cat <(echo "R") <(cat results/CNV-kidney_expression-boxplots-FDR01.corr)) > results/CNV_kidney_CISResults.FDR01.corr
 
 results/CNV-kidney-miR-CISResults.FDR01.corr: results/CNV-kidney-miR-CISResults.FDR01
-	paste <(cat results/CNV-kidney-miR-CISResults.FDR01) <(cat <(echo "R^2") <(cat results/CNV-kidney_miRNA_expression-boxplots-FDR01.corr))  > results/CNV-kidney-miR-CISResults.FDR01.corr
+	paste <(cat results/CNV-kidney-miR-CISResults.FDR01) <(cat <(echo "R") <(cat results/CNV-kidney_miRNA_expression-boxplots-FDR01.corr))  > results/CNV-kidney-miR-CISResults.FDR01.corr
 
 results/CNV_liver_CISResults.FDR01.corr: results/CNV_liver_CISResults.FDR01
-	paste <(cat results/CNV_liver_CISResults.FDR01) <(cat <(echo "R^2") <(cat results/CNV-liver_expression-boxplots-FDR01.corr)) > results/CNV_liver_CISResults.FDR01.corr
+	paste <(cat results/CNV_liver_CISResults.FDR01) <(cat <(echo "R") <(cat results/CNV-liver_expression-boxplots-FDR01.corr)) > results/CNV_liver_CISResults.FDR01.corr
 
 results/CNV-liver-miR-CISResults.FDR01.corr: results/CNV-liver-miR-CISResults.FDR01
-	paste <(cat results/CNV-liver-miR-CISResults.FDR01) <(cat <(echo "R^2") <(cat results/CNV-liver_miRNA_expression-boxplots-FDR01.corr)) > results/CNV-liver-miR-CISResults.FDR01.corr
+	paste <(cat results/CNV-liver-miR-CISResults.FDR01) <(cat <(echo "R") <(cat results/CNV-liver_miRNA_expression-boxplots-FDR01.corr)) > results/CNV-liver-miR-CISResults.FDR01.corr
 
 results/kidney-miR-expr-CISResults.FDR01.corr: results/kidney-miR-expr-CISResults.FDR01
-	paste <(cat results/kidney-miR-expr-CISResults.FDR01) <(cat <(echo "R^2") <(cat results/kidney_expression-miRNA_scatterplot-FDR01.corr)) > results/kidney-miR-expr-CISResults.FDR01.corr
+	paste <(cat results/kidney-miR-expr-CISResults.FDR01) <(cat <(echo "R") <(cat results/kidney_expression-miRNA_scatterplot-FDR01.corr)) > results/kidney-miR-expr-CISResults.FDR01.corr
 
 results/liver-miR-expr-CISResults.FDR01.corr: results/liver-miR-expr-CISResults.FDR01
-	paste <(cat results/liver-miR-expr-CISResults.FDR01) <(cat <(echo "R^2") <(cat results/liver_expression-miRNA_scatterplot-FDR01.corr)) > results/liver-miR-expr-CISResults.FDR01.corr
+	paste <(cat results/liver-miR-expr-CISResults.FDR01) <(cat <(echo "R") <(cat results/liver_expression-miRNA_scatterplot-FDR01.corr)) > results/liver-miR-expr-CISResults.FDR01.corr
 
 FDR01: results/CNV_kidney_CISResults.FDR01 results/CNV-kidney-miR-CISResults.FDR01 results/CNV_liver_CISResults.FDR01 results/CNV-liver-miR-CISResults.FDR01 results/kidney-miR-expr-CISResults.FDR01 results/liver-miR-expr-CISResults.FDR01
 
