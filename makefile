@@ -62,15 +62,7 @@ results/CNV_kidney_CISResults.FDR01: results/CNV_kidney_CISResults
 	cat <(head -n 1 results/CNV_kidney_CISResults) <(awk '$$6<0.1 {print}' results/kidney-miR-expr-CISResults) > results/kidney-miR-expr-CISResults.FDR01
 	cat <(head -n 1 results/CNV_kidney_CISResults) <(awk '$$6<0.1 {print}' results/liver-miR-expr-CISResults) > results/liver-miR-expr-CISResults.FDR01
 
-results/CNV-kidney-miR-CISResults.FDR01: results/CNV_kidney_CISResults.FDR01
-
-results/CNV_liver_CISResults.FDR01: results/CNV-kidney-miR-CISResults.FDR01
-
-results/CNV-liver-miR-CISResults.FDR01: results/CNV_liver_CISResults.FDR01
-
-results/kidney-miR-expr-CISResults.FDR01: results/CNV-liver-miR-CISResults.FDR01
-
-results/liver-miR-expr-CISResults.FDR01: results/kidney-miR-expr-CISResults.FDR01
+results/CNV-kidney-miR-CISResults.FDR01 results/CNV_liver_CISResults.FDR01 results/CNV-liver-miR-CISResults.FDR01 results/kidney-miR-expr-CISResults.FDR01 results/liver-miR-expr-CISResults.FDR0 results/liver-miR-expr-CISResults.FDR01: results/CNV_kidney_CISResults.FDR01
 
 CISResults: data/CNV_matrix.newID.out.filter data/CNV_position data/liver_expression.out.filter data/gene_position miR_expression miR_CNV covariates
 	R --no-save < code/meqtlrun.R
@@ -79,8 +71,10 @@ results/CNV_kidney_CISResults results/CNV-kidney-miR-CISResults results/CNV_live
 
 covariates: data/CNV_kid_cov data/CNV_kid-miR_cov data/CNV_liv_cov data/CNV_liv-miR_cov data/kid-miR-expr_cov data/liv-miR-expr_cov
 
-data/CNV_kid_cov data/CNV_kid-miR_cov data/CNV_liv_cov data/CNV_liv-miR_cov data/kid-miR-expr_cov data/liv-miR-expr_cov: data/CNV_matrix.newID.out.filter data/CNV_position data/liver_expression.out.filter data/gene_position miR_expression miR_CNV
+data/CNV_kid_cov: data/CNV_matrix.newID.out.filter data/CNV_position data/liver_expression.out.filter data/gene_position miR_expression miR_CNV
 	R --no-save < code/pca_and_covariates.R
+
+data/CNV_kid-miR_cov data/CNV_liv_cov data/CNV_liv-miR_cov data/kid-miR-expr_cov data/liv-miR-expr_cov: data/CNV_kid_cov
 
 miR_expression: data/liver_miRNA_expression.miR_out.newID data/kidney_miRNA_expression.miR_out.newID data/miRNA_positions.snps data/liver_expression.miR_out.filter data/kidney_expression.miR_out.filter data/liver_miRNA_expression.miR_expr_out.filter data/kidney_miRNA_expression.miR_expr_out.filter
 
@@ -118,15 +112,7 @@ data/liver_expression: data/kidney_expression
 data/liver_expression.out.filter: data/liver_expression.out data/kidney_expression.out data/kidney_expression.miR_out data/liver_expression.miR_out data/liver_miRNA_expression.miR_expr_out data/kidney_miRNA_expression.miR_expr_out
 	R --no-save < code/runFilter.R
 
-data/kidney_expression.out.filter: data/liver_expression.out.filter
-
-data/liver_expression.miR_out.filter: data/kidney_expression.out.filter
-
-data/kidney_expression.miR_out.filter: data/liver_expression.miR_out.filter
-
-data/kidney_miRNA_expression.miR_expr_out.filter: data/kidney_expression.miR_out.filter
-
-data/liver_miRNA_expression.miR_expr_out.filter: data/kidney_miRNA_expression.miR_expr_out.filter
+data/kidney_expression.out.filter data/liver_expression.miR_out.filter data/kidney_expression.miR_out.filter data/kidney_miRNA_expression.miR_expr_out.filter data/liver_miRNA_expression.miR_expr_out.filter : data/liver_expression.out.filter
 
 data/kidney_expression.miR_out: data/kidney_expression data/kidney_miRNA_expression data/liver_miRNA_expression
 	perl code/overlap_miRNA.pl data/kidney_expression data/kidney_miRNA_expression
