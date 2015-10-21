@@ -1,6 +1,6 @@
 SHELL=/bin/bash
 
-analysis: setup FDR01 network CORR GENENAMES
+analysis: setup FDR01 network CORR GENEIDS
 
 clean:
 	rm data/liv* data/kid* data/CNV* data/gene_position results/*
@@ -12,19 +12,19 @@ setup:
 
 network: results/kidney_network results/liver_network
 
-GENENAMES: results/liver-miR-expr-CISResults.FDR01.corr.genenames results/kidney-miR-expr-CISResults.FDR01.corr.genenames results/CNV_liver_CISResults.FDR01.corr.genenames results/CNV_kidney_CISResults.FDR01.corr.genenames
+GENEIDS: results/liver-miR-expr-CISResults.FDR01.corr.geneids results/kidney-miR-expr-CISResults.FDR01.corr.geneids results/CNV_liver_CISResults.FDR01.corr.geneids results/CNV_kidney_CISResults.FDR01.corr.geneids
 
-results/liver-miR-expr-CISResults.FDR01.corr.genenames: results/liver-miR-expr-CISResults.FDR01.corr
-	perl code/add_gene_names.pl results/liver-miR-expr-CISResults.FDR01.corr > results/liver-miR-expr-CISResults.FDR01.corr.genenames
+results/liver-miR-expr-CISResults.FDR01.corr.geneids: results/liver-miR-expr-CISResults.FDR01.corr
+	perl code/add_gene_ids.pl results/liver-miR-expr-CISResults.FDR01.corr > results/liver-miR-expr-CISResults.FDR01.corr.geneids
 
-results/kidney-miR-expr-CISResults.FDR01.corr.genenames: results/kidney-miR-expr-CISResults.FDR01.corr
-	perl code/add_gene_names.pl results/kidney-miR-expr-CISResults.FDR01.corr > results/kidney-miR-expr-CISResults.FDR01.corr.genenames
+results/kidney-miR-expr-CISResults.FDR01.corr.geneids: results/kidney-miR-expr-CISResults.FDR01.corr
+	perl code/add_gene_ids.pl results/kidney-miR-expr-CISResults.FDR01.corr > results/kidney-miR-expr-CISResults.FDR01.corr.geneids
 
-results/CNV_liver_CISResults.FDR01.corr.genenames: results/CNV_liver_CISResults.FDR01.corr
-	perl code/add_gene_names.pl results/CNV_liver_CISResults.FDR01.corr > results/CNV_liver_CISResults.FDR01.corr.genenames
+results/CNV_liver_CISResults.FDR01.corr.geneids: results/CNV_liver_CISResults.FDR01.corr
+	perl code/add_gene_ids.pl results/CNV_liver_CISResults.FDR01.corr > results/CNV_liver_CISResults.FDR01.corr.geneids
 
-results/CNV_kidney_CISResults.FDR01.corr.genenames: results/CNV_kidney_CISResults.FDR01.corr
-	perl code/add_gene_names.pl results/CNV_kidney_CISResults.FDR01.corr > results/CNV_kidney_CISResults.FDR01.corr.genenames
+results/CNV_kidney_CISResults.FDR01.corr.geneids: results/CNV_kidney_CISResults.FDR01.corr
+	perl code/add_gene_ids.pl results/CNV_kidney_CISResults.FDR01.corr > results/CNV_kidney_CISResults.FDR01.corr.geneids
 
 results/kidney_network: results/CNV_kidney_CISResults.FDR01 results/CNV-kidney-miR-CISResults.FDR01 results/kidney-miR-expr-CISResults.FDR01
 	cat <(awk '{print $$1"\tCNV-mRNA\t"$$2}' results/CNV_kidney_CISResults.FDR01) <(awk '{print $$1"\tCNV-miRNA\t"$$2}' results/CNV-kidney-miR-CISResults.FDR01) <(awk '{print $$1"\tmiRNA-mRNA\t"$$2}' results/kidney-miR-expr-CISResults.FDR01) > results/kidney_network
