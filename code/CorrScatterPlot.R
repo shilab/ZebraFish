@@ -53,7 +53,7 @@ CorrScatterPlot <- function (mEQTL,threshold,expr,genot,visual=TRUE,cis=TRUE,fil
       geno <- as.numeric(genotype[[i]])
       pheno <- as.numeric(phenotype[[i]])
 
-      plot(geno, pheno, xlab="miRNA Expression", ylab="mRNA Expression", ylim=c(0,max(pheno)), xlim=c(0,max(geno)), main = paste(as.character(eqtls$snps[i])," genotype","\nCorrelation: ",format(corr[i],2),"P-value: ",format(eqtls$pvalue[i],2)," FDR: ",format(eqtls$FDR[i],2)))
+      plot(geno, pheno, xlab=paste(as.character(eqtls$snps[i]),"Expression",sep=" "), ylab=paste(as.character(eqtls$gene[i]), "Expression",sep=" "), ylim=c(min(pheno),max(pheno)+1), xlim=c(min(geno),max(geno)), main = paste(as.character(eqtls$snps[i])," - ",as.character(eqtls$gene[i]), "\nCorrelation: ",format(corr[i],2),"\nP-value: ",format(eqtls$pvalue[i],2),"\nFDR: ",format(eqtls$FDR[i],2)), cex.main=0.75)
       	      abline(lm(pheno ~ geno)) 
       
     }

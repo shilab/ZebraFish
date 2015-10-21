@@ -51,10 +51,11 @@ CorrBoxPlot <- function (mEQTL,threshold,expr,genot,visual=FALSE,pdf_file="",cis
       }
       #Plot the boxplots
 	  cats=seq(0,length(genotypes)-1)
-      boxplot(values,boxwex=0.5,ylab=paste(as.character(eqtls$gene[i])," expression"), ylim=c(0,max(phenotype[[i]])),names=cats,
-              xlab=paste(as.character(eqtls$snps[i])," genotype","\nCorrelation: ",format(corr[i],2),
-                         "P-value: ",format(eqtls$pvalue[i],2)," FDR: ",format(eqtls$FDR[i],2)),
-              main=paste(as.character(eqtls$snps[i])," - ",as.character(eqtls$gene[i])))
+      boxplot(values,boxwex=0.5,ylab=paste(as.character(eqtls$gene[i])," expression"), ylim=c(min(phenotype[[i]]),max(phenotype[[i]])),
+	  xlim=c(min(genotype[[i]]),max(genotype[[i]])+1.5),names=cats,
+              xlab=paste(as.character(eqtls$snps[i])," genotypes"),
+              main=paste(as.character(eqtls$snps[i])," - ",as.character(eqtls$gene[i]),"\nCorrelation: ",format(corr[i],2),
+			                           "\nP-value: ",format(eqtls$pvalue[i],2),"\nFDR: ",format(eqtls$FDR[i],2)), cex.main=0.75)
     }
 	dev.off()
   }
