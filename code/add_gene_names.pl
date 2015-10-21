@@ -26,7 +26,7 @@ while (<FILE>)
 {
     if ($_ =~ /^SNP/)
     {
-        print;
+        print "SNP\tgene\tgenename\tgeneid\tbeta\tt-stat\tp-value\tFDR\tR";
     }
     else
     {
